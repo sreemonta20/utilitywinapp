@@ -38,9 +38,13 @@
             txtCVPath = new TextBox();
             btnBrowse = new Button();
             chkConvertToPdf = new CheckBox();
+            chkWriteToFooter = new CheckBox();
             btnProcess = new Button();
             picLoader = new PictureBox();
             lblStatus = new Label();
+            lblRelevantQANum = new Label();
+            txtRelevantQANum = new TextBox();
+            btnClear = new Button();
             ((System.ComponentModel.ISupportInitialize)picLoader).BeginInit();
             SuspendLayout();
             // 
@@ -55,10 +59,10 @@
             // 
             // txtCompany
             // 
-            txtCompany.Location = new Point(180, 60);
+            txtCompany.Location = new Point(180, 17);
             txtCompany.Name = "txtCompany";
             txtCompany.Size = new Size(480, 23);
-            txtCompany.TabIndex = 3;
+            txtCompany.TabIndex = 1;
             // 
             // lblPosition
             // 
@@ -71,19 +75,19 @@
             // 
             // txtPosition
             // 
-            txtPosition.Location = new Point(180, 20);
+            txtPosition.Location = new Point(180, 57);
             txtPosition.Name = "txtPosition";
             txtPosition.Size = new Size(480, 23);
-            txtPosition.TabIndex = 1;
+            txtPosition.TabIndex = 3;
             // 
             // lblKeywords
             // 
             lblKeywords.AutoSize = true;
             lblKeywords.Location = new Point(20, 100);
             lblKeywords.Name = "lblKeywords";
-            lblKeywords.Size = new Size(61, 15);
+            lblKeywords.Size = new Size(91, 15);
             lblKeywords.TabIndex = 4;
-            lblKeywords.Text = "Keywords:";
+            lblKeywords.Text = "Job Description:";
             // 
             // txtKeywords
             // 
@@ -131,43 +135,84 @@
             chkConvertToPdf.Text = "Convert to PDF";
             chkConvertToPdf.UseVisualStyleBackColor = true;
             // 
+            // chkWriteToFooter
+            // 
+            chkWriteToFooter.AutoSize = true;
+            chkWriteToFooter.Checked = true;
+            chkWriteToFooter.CheckState = CheckState.Checked;
+            chkWriteToFooter.Location = new Point(20, 305);
+            chkWriteToFooter.Name = "chkWriteToFooter";
+            chkWriteToFooter.Size = new Size(267, 19);
+            chkWriteToFooter.TabIndex = 10;
+            chkWriteToFooter.Text = "Write keywords to Footer (default) / Last Page";
+            chkWriteToFooter.UseVisualStyleBackColor = true;
+            // 
             // btnProcess
             // 
             btnProcess.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnProcess.Location = new Point(280, 320);
+            btnProcess.Location = new Point(239, 374);
             btnProcess.Name = "btnProcess";
             btnProcess.Size = new Size(140, 35);
-            btnProcess.TabIndex = 10;
+            btnProcess.TabIndex = 13;
             btnProcess.Text = "Process CV";
             btnProcess.UseVisualStyleBackColor = true;
             btnProcess.Click += btnProcess_Click;
             // 
             // picLoader
             // 
-            picLoader.Location = new Point(280, 380);
+            picLoader.Location = new Point(314, 415);
             picLoader.Name = "picLoader";
             picLoader.Size = new Size(140, 40);
             picLoader.SizeMode = PictureBoxSizeMode.Zoom;
-            picLoader.TabIndex = 11;
+            picLoader.TabIndex = 13;
             picLoader.TabStop = false;
             picLoader.Visible = false;
             // 
             // lblStatus
             // 
-            lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Segoe UI", 9F);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(319, 461);
+            lblStatus.Location = new Point(20, 486);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(0, 15);
-            lblStatus.TabIndex = 12;
+            lblStatus.Size = new Size(744, 40);
+            lblStatus.TabIndex = 16;
             lblStatus.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lblRelevantQANum
+            // 
+            lblRelevantQANum.AutoSize = true;
+            lblRelevantQANum.Location = new Point(20, 336);
+            lblRelevantQANum.Name = "lblRelevantQANum";
+            lblRelevantQANum.Size = new Size(139, 15);
+            lblRelevantQANum.TabIndex = 11;
+            lblRelevantQANum.Text = "Relevant Q&A to Generate:";
+            // 
+            // txtRelevantQANum
+            // 
+            txtRelevantQANum.Location = new Point(180, 333);
+            txtRelevantQANum.Name = "txtRelevantQANum";
+            txtRelevantQANum.Size = new Size(50, 23);
+            txtRelevantQANum.TabIndex = 12;
+            txtRelevantQANum.Text = "5";
+            // 
+            // btnClear
+            // 
+            btnClear.Font = new Font("Segoe UI", 10F);
+            btnClear.Location = new Point(399, 374);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(140, 35);
+            btnClear.TabIndex = 14;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 511);
+            ClientSize = new Size(784, 550);
+            Controls.Add(lblRelevantQANum);
+            Controls.Add(txtRelevantQANum);
             Controls.Add(lblCompany);
             Controls.Add(txtCompany);
             Controls.Add(lblPosition);
@@ -181,6 +226,8 @@
             Controls.Add(btnProcess);
             Controls.Add(picLoader);
             Controls.Add(lblStatus);
+            Controls.Add(btnClear);
+            Controls.Add(chkWriteToFooter);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "MainForm";
@@ -203,8 +250,12 @@
         private TextBox txtCVPath;
         private Button btnBrowse;
         private CheckBox chkConvertToPdf;
+        private CheckBox chkWriteToFooter;
         private Button btnProcess;
         private PictureBox picLoader;
         private Label lblStatus;
+        private Label lblRelevantQANum; // NEW
+        private TextBox txtRelevantQANum; // NEW
+        private Button btnClear; // NEW
     }
 }
