@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_70272E2040584137A4A36AB9F7DC01F0"
+        "MsmKey" = "8:_84CC11B39F774D9BBAAFAC3EF81EF694"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -165,9 +165,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:CV Customizer Tool"
+        "ProductName" = "8:CV Customizer Tool with Gemini AI"
         "ProductCode" = "8:{60285122-07F9-43CC-A040-E8E41FF42344}"
-        "PackageCode" = "8:{4B3011CB-8626-4C30-AA1D-FFC383D5AC6D}"
+        "PackageCode" = "8:{B9AA7636-8F20-4A19-AFB6-CE08D75B8484}"
         "UpgradeCode" = "8:{37797357-A561-40D0-9E83-0CB0123B728D}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -175,7 +175,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Sreemonta Bhowmik"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:cvApp.Installer"
@@ -287,7 +287,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_E9B7D9C15512423EAC2613A639460CB0"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3B434A90BFD64BBCA541657499388BBF"
             {
             "Name" = "8:CV Customizer Tool"
             "Arguments" = "8:"
@@ -295,8 +295,8 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_70272E2040584137A4A36AB9F7DC01F0"
-            "Folder" = "8:_08B45988E89C47AEBC892708D612F673"
+            "Target" = "8:_84CC11B39F774D9BBAAFAC3EF81EF694"
+            "Folder" = "8:_E7E3A398337D47EA9E933A8384F4CF2C"
             "WorkingFolder" = "8:_08B45988E89C47AEBC892708D612F673"
             "Icon" = "8:"
             "Feature" = "8:"
@@ -700,7 +700,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_70272E2040584137A4A36AB9F7DC01F0"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_84CC11B39F774D9BBAAFAC3EF81EF694"
             {
             "SourcePath" = "8:..\\cvApp\\obj\\Release\\net9.0-windows\\cvApp.dll"
             "TargetName" = "8:"
