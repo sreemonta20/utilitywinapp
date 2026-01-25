@@ -1,335 +1,69 @@
-﻿using DocumentFormat.OpenXml;
+﻿using cvApp.Models;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Extensions.Configuration;
 using Mscc.GenerativeAI;
 using Spire.Doc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions; // For new sanitization
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Xceed.Words.NET;
 using CheckBox = System.Windows.Forms.CheckBox;
 using Color = DocumentFormat.OpenXml.Wordprocessing.Color;
 using Document = Spire.Doc.Document;
 using Image = System.Drawing.Image;
-using System.Text.RegularExpressions; // For new sanitization
+using StringReplaceTextOptions = Xceed.Document.NET.StringReplaceTextOptions;
 
 namespace cvApp
 {
-    //public partial class MainForm : Form
-    //{
-    //    // Note: Replace "YOUR_GEMINI_API_KEY_HERE" with your actual key. 
-    //    // For production, use Environment.GetEnvironmentVariable("GEMINI_API_KEY") for security.
-    //    private const string GeminiApiKey = "AIzaSyBoCT25bQ8HntrNcciBRqZ1uhHlIuN0EdA";
-    //    public MainForm()
-    //    {
-    //        InitializeComponent();
-    //        picLoader.Image = Image.FromFile("loader-wait.gif");
-    //        // Set default to 5, which is already in designer, but good to ensure
-    //        txtRelevantQANum.Text = "5";
-    //    }
 
-    //    private void btnBrowse_Click(object sender, EventArgs e)
-    //    {
-    //        using (OpenFileDialog ofd = new OpenFileDialog())
-    //        {
-    //            ofd.Filter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
-    //            ofd.Title = "Select CV File";
-
-    //            if (ofd.ShowDialog() == DialogResult.OK)
-    //            {
-    //                txtCVPath.Text = ofd.FileName;
-    //            }
-    //        }
-    //    }
-
-    //    private async void btnProcess_Click(object sender, EventArgs e)
-    //    {
-    //        try
-    //        {
-    //            // Validate inputs
-    //            if (string.IsNullOrWhiteSpace(txtCompany.Text))
-    //            {
-    //                MessageBox.Show("Please enter company name.", "Validation Error",
-    //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    //                txtCompany.Focus();
-    //                return;
-    //            }
-
-    //            if (string.IsNullOrWhiteSpace(txtPosition.Text))
-    //            {
-    //                MessageBox.Show("Please enter position.", "Validation Error",
-    //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    //                txtPosition.Focus();
-    //                return;
-    //            }
-
-    //            if (string.IsNullOrWhiteSpace(txtKeywords.Text))
-    //            {
-    //                MessageBox.Show("Please enter keywords.", "Validation Error",
-    //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    //                txtKeywords.Focus();
-    //                return;
-    //            }
-
-    //            if (string.IsNullOrWhiteSpace(txtCVPath.Text) || !File.Exists(txtCVPath.Text))
-    //            {
-    //                MessageBox.Show("Please select a valid CV file.", "Validation Error",
-    //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    //                return;
-    //            }
-
-    //            if (!int.TryParse(txtRelevantQANum.Text, out int qaCount) || qaCount < 1)
-    //            {
-    //                MessageBox.Show("Please enter a valid number (1 or more) for Q&A to generate.", "Validation Error",
-    //                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    //                txtRelevantQANum.Focus();
-    //                return;
-    //            }
-
-    //            string keywords = txtKeywords.Text.Trim(); // Get user input
-
-    //            // --- GEMINI INTEGRATION POINT ---
-    //            if (!string.IsNullOrWhiteSpace(keywords))
-    //            {
-    //                // Show loader and status
-    //                picLoader.Visible = true;
-    //                lblStatus.Text = "Please wait. Work on progress";
-    //                lblStatus.ForeColor = System.Drawing.Color.Blue;
-    //                Application.DoEvents();
-
-    //                // Combine Company and Position for a good context for the AI
-    //                string jobDescriptionInput = $"Company: {txtCompany.Text}, Position: {txtPosition.Text}\n{txtKeywords.Text}";
-
-    //                keywords = await ExtractKeywordsAsync(jobDescriptionInput);
-
-    //                if (keywords.StartsWith("ERROR:"))
-    //                {
-    //                    // Handle extraction failure or API key error
-    //                    picLoader.Visible = false;
-    //                    lblStatus.Text = keywords; // Display the error message from the method
-    //                    lblStatus.ForeColor = System.Drawing.Color.Red;
-    //                    MessageBox.Show(keywords, "Gemini Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //                    return;
-    //                }
-
-    //                if (string.IsNullOrWhiteSpace(keywords))
-    //                {
-    //                    // If the AI returned nothing
-    //                    picLoader.Visible = false;
-    //                    lblStatus.Text = "Error: Gemini could not extract keywords. Please enter them manually.";
-    //                    lblStatus.ForeColor = System.Drawing.Color.Red;
-    //                    MessageBox.Show("Keywords extraction failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //                    return;
-    //                }
-
-    //                // Populate the textbox with the AI's result for user visibility
-    //                txtKeywords.Text = keywords;
-    //            }
-    //            else
-    //            {
-    //                // If the AI returned nothing
-    //                picLoader.Visible = false;
-    //                lblStatus.Text = "Error: Gemini could not extract keywords. Please enter them manually.";
-    //                lblStatus.ForeColor = System.Drawing.Color.Red;
-    //                MessageBox.Show("Keywords extraction failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //                return;
-    //            }
-    //            // --- END GEMINI INTEGRATION ---
-
-    //            // Process the CV
-    //            bool convertToPdf = chkConvertToPdf.Checked;
-    //            ProcessCV(txtCVPath.Text, txtCompany.Text, txtPosition.Text, txtKeywords.Text, convertToPdf);
-
-    //            // Hide loader and update status
-    //            picLoader.Visible = false;
-    //            lblStatus.Text = "✓ Finished! CV has been customized successfully.\nThe file has been opened.";
-    //            lblStatus.ForeColor = System.Drawing.Color.Green;
-
-    //            MessageBox.Show("CV customized successfully!", "Success",
-    //                MessageBoxButtons.OK, MessageBoxIcon.Information);
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            picLoader.Visible = false;
-    //            lblStatus.Text = $"Error: {ex.Message}";
-    //            lblStatus.ForeColor = System.Drawing.Color.Red;
-    //            MessageBox.Show($"Error: {ex.Message}", "Error",
-    //                MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //        }
-    //    }
-
-    //    private async Task<string> ExtractKeywordsAsync(string jobDescription)
-    //    {
-    //        if (string.IsNullOrWhiteSpace(GeminiApiKey) || GeminiApiKey.Equals("YOUR_GEMINI_API_KEY_HERE"))
-    //        {
-    //            return "ERROR: Gemini API Key not set. Please update MainForm.cs.";
-    //        }
-
-    //        try
-    //        {
-    //            // 1. Initialize the GoogleAI client and select a capable model
-    //            var googleAI = new GoogleAI(apiKey: GeminiApiKey);
-    //            var model = googleAI.GenerativeModel(model: Model.Gemini25Flash); // gemini-2.5-flash is fast and capable.
-
-    //            // 2. Craft a precise prompt (System Instruction)
-    //            var prompt = $@"
-    //                You are an expert keyword extraction tool. 
-    //                Analyze the following job description to extract the most important technical skills, 
-    //                soft skills, and industry terms.
-
-    //                Return the extracted keywords as a single string, with each keyword 
-    //                separated **ONLY** by a comma and a single space (e.g., 'C#, .NET, Agile, Scrum Master'). 
-    //                Do not include any other text, explanations, or formatting (like bullet points or list numbers).
-
-    //                Job Description to Analyze:
-    //                ---
-    //                {jobDescription}
-    //                ---
-    //            ";
-
-    //            // 3. Call the API asynchronously
-    //            var response = await model.GenerateContent(prompt);
-
-    //            // 4. Return the cleaned-up result
-    //            return response.Text.Trim().Trim('"', '\'').Trim();
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            // Return the error message to be displayed in the status bar
-    //            return $"API Exception: {ex.Message}";
-    //        }
-    //    }
-
-    //    private void ProcessCV(string sourcePath, string company, string position, string keywords, bool convertToPdf)
-    //    {
-    //        string directory = Path.GetDirectoryName(sourcePath) ?? "";
-    //        string baseFileName = Path.GetFileNameWithoutExtension(sourcePath);
-
-    //        string sanitizedCompany = SanitizeFileName(company);
-    //        string sanitizedPosition = SanitizeFileName(position);
-
-    //        string newFileName = $"{baseFileName}_{sanitizedCompany}_{sanitizedPosition}.docx";
-    //        string newFilePath = Path.Combine(directory, newFileName);
-
-    //        File.Copy(sourcePath, newFilePath, true);
-
-    //        AddInvisibleKeywordsToFooter(newFilePath, keywords);
-
-    //        string outputPath = newFilePath;
-
-    //        if (convertToPdf)
-    //        {
-    //            string pdfFileName = $"{baseFileName}_{sanitizedCompany}_{sanitizedPosition}.pdf";
-    //            outputPath = Path.Combine(directory, pdfFileName);
-
-    //            Document document = new Document();
-    //            document.LoadFromFile(newFilePath);
-    //            document.SaveToFile(outputPath, FileFormat.PDF);
-
-    //            File.Delete(newFilePath); // Clean up the temporary DOCX file
-    //        }
-
-    //        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-    //        {
-    //            FileName = outputPath,
-    //            UseShellExecute = true
-    //        });
-    //    }
-
-    //    private string SanitizeFileName(string fileName)
-    //    {
-    //        char[] invalidChars = Path.GetInvalidFileNameChars();
-    //        string sanitized = new string(fileName
-    //            .Where(c => !invalidChars.Contains(c))
-    //            .ToArray());
-
-    //        return sanitized.Replace(" ", "").ToLower();
-    //    }
-
-    //    private void AddInvisibleKeywordsToFooter(string filePath, string keywords)
-    //    {
-    //        using (WordprocessingDocument doc = WordprocessingDocument.Open(filePath, true))
-    //        {
-    //            MainDocumentPart mainPart = doc.MainDocumentPart
-    //                ?? throw new InvalidOperationException("Document has no main part");
-
-    //            var document = mainPart.Document;
-    //            var body = document.Body ?? throw new InvalidOperationException("Document body is null");
-
-    //            var sectionPropsList = body.Descendants<SectionProperties>().ToList();
-
-    //            if (sectionPropsList.Count == 0)
-    //            {
-    //                var sectionProps = new SectionProperties();
-    //                body.Append(sectionProps);
-    //                sectionPropsList.Add(sectionProps);
-    //            }
-
-    //            foreach (var sectionProps in sectionPropsList)
-    //            {
-    //                FooterReference footerRef = sectionProps.Descendants<FooterReference>()
-    //                    .FirstOrDefault(r => r.Type?.Value == HeaderFooterValues.Default);
-
-    //                FooterPart footerPart;
-    //                if (footerRef != null)
-    //                {
-    //                    footerPart = (FooterPart)mainPart.GetPartById(footerRef.Id!);
-    //                }
-    //                else
-    //                {
-    //                    footerPart = mainPart.AddNewPart<FooterPart>();
-    //                    footerRef = new FooterReference() { Type = HeaderFooterValues.Default, Id = mainPart.GetIdOfPart(footerPart) };
-    //                    sectionProps.Append(footerRef);
-    //                }
-
-    //                Footer footer = footerPart.Footer ?? new Footer();
-
-    //                Paragraph para = new Paragraph();
-
-    //                ParagraphProperties paraProps = new ParagraphProperties();
-    //                Justification justification = new Justification() { Val = JustificationValues.Left };
-    //                paraProps.Append(justification);
-    //                para.Append(paraProps);
-
-    //                Run run = new Run();
-    //                RunProperties runProps = new RunProperties();
-
-    //                Color color = new Color() { Val = "FFFFFF" };
-    //                runProps.Append(color);
-
-    //                FontSize fontSize = new FontSize() { Val = "2" }; // 1pt font size
-    //                runProps.Append(fontSize);
-
-    //                run.Append(runProps);
-    //                run.Append(new Text(keywords) { Space = SpaceProcessingModeValues.Preserve });
-
-    //                para.Append(run);
-    //                footer.Append(para);
-
-    //                footerPart.Footer = footer;
-    //                footerPart.Footer.Save();
-    //            }
-
-    //            mainPart.Document.Save();
-    //        }
-    //    }
-    //}
     public partial class MainForm : Form
     {
-        // Note: Replace "YOUR_GEMINI_API_KEY_HERE" with your actual key. 
-        // For production, use Environment.GetEnvironmentVariable("GEMINI_API_KEY") for security.
-        private const string GeminiApiKey = "AIzaSyBoCT25bQ8HntrNcciBRqZ1uhHlIuN0EdA";
-
-        public MainForm()
+        #region Variable declaration and constructor initialization
+        private readonly IConfiguration _config;
+        private readonly AIModel _aiModel;
+        private string outputFolder = string.Empty;
+        private string sanitizedCompany = string.Empty;
+        private string sanitizedPosition = string.Empty;
+        private readonly CoverLetter? oCoverLetter;
+        public MainForm(IConfiguration config)
         {
             InitializeComponent();
             picLoader.Image = Image.FromFile("loader-wait.gif");
-            // Set default to 5, which is already in designer, but good to ensure
-            txtRelevantQANum.Text = "5";
-        }
+            _config = config;
 
+            /// cv/resume section innitialization
+            var modelIndex = Convert.ToInt32(_config["ModelIndex"]);
+            var numberOfQA = _config["InitialFAQNumber"];
+            List<AIModel>? oModelList = _config.GetSection("AIModels").Get<List<AIModel>>();
+            _aiModel = oModelList![modelIndex];
+            txtRelevantQANum.Text = numberOfQA;
+
+            /// cover letter section innitialization
+            oCoverLetter = _config.GetSection("CoverLetter").Get<CoverLetter>();
+            if (oCoverLetter != null)
+            {
+                string rawAddress = oCoverLetter.AddressTo ?? string.Empty;
+                string formattedAddress = rawAddress.Replace(".", Environment.NewLine);
+                txtAddressTo.Text = formattedAddress;
+                txtSalutation.Text = oCoverLetter.Salutation ?? string.Empty;
+                txtJobSource.Text = oCoverLetter.JobSource ?? string.Empty;
+                txtJobPosition.Text = oCoverLetter.Position ?? string.Empty;
+                txtJobCompanyLoc.Text = oCoverLetter.CompanyLocation ?? string.Empty;
+                txtSkills.Text = oCoverLetter.Skills ?? string.Empty;
+                chkClientOrg.Checked = oCoverLetter.Organization ?? false;
+                chkLetterToPdf.Checked = oCoverLetter.ConvertToPdf ?? false;
+            }
+
+        }
+        #endregion
+
+        #region All methods
         /// <summary>
         /// Handles the Click event of the Browse button, allowing the user to select a file.
         /// </summary>
@@ -353,22 +87,43 @@ namespace cvApp
         }
 
         /// <summary>
+        /// Creates and sets the output directory based on sanitized company and position names, ensuring the directory
+        /// exists.
+        /// </summary>
+        private void SetUpOutputDirectory()
+        {
+            // 1. Sanitize the inputs
+            sanitizedCompany = SanitizeFolderName(txtCompany.Text);
+            sanitizedPosition = SanitizeFolderName(txtPosition.Text);
+
+            // 2. Build the folder name and path
+            string folderName = $"{sanitizedCompany}_{sanitizedPosition}";
+            string parentDirectory = Path.GetDirectoryName(txtCVPath.Text) ?? Directory.GetCurrentDirectory();
+            outputFolder = Path.Combine(parentDirectory, folderName);
+
+            // 3. Ensure the folder exists
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
+            }
+        }
+
+        /// <summary>
         /// Handles the click event of the "Process" button, performing a series of operations to customize a CV and
-        /// generate supplementary documents.
+        /// generate supplementary documents such as job description, job description related technical question and answer.
         /// </summary>
         /// <remarks>This method validates user input, creates an output folder, generates a job
-        /// description document, extracts keywords using an AI service, processes the CV, and generates a relevant Q&A
+        /// description document, extracts keywords using an AI service, processes the CV, and generates a relevant FAQ
         /// document. The generated files are saved in the output folder, and the folder is opened for the user upon
         /// successful completion.</remarks>
         /// <param name="sender">The source of the event, typically the "Process" button.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         private async void btnProcess_Click(object sender, EventArgs e)
         {
-            // Initial validation and setup
             try
             {
                 if (string.IsNullOrWhiteSpace(txtCompany.Text) || string.IsNullOrWhiteSpace(txtPosition.Text) ||
-                    string.IsNullOrWhiteSpace(txtKeywords.Text) || string.IsNullOrWhiteSpace(txtCVPath.Text) ||
+                    string.IsNullOrWhiteSpace(txtJobDescription.Text) || string.IsNullOrWhiteSpace(txtCVPath.Text) ||
                     !File.Exists(txtCVPath.Text))
                 {
                     MessageBox.Show("Please fill all fields and select a valid CV file.", "Validation Error",
@@ -376,12 +131,53 @@ namespace cvApp
                     return;
                 }
 
-                if (!int.TryParse(txtRelevantQANum.Text, out int qaCount) || qaCount < 1)
+
+                if (chkIsQAGenerate.Checked && !IsPositiveIntAtLeastOne(txtRelevantQANum.Text))
                 {
                     MessageBox.Show("Please enter a valid number (1 or more) for Q&A to generate.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtRelevantQANum.Focus();
                     return;
+                }
+
+                //if (!int.TryParse(txtRelevantQANum.Text, out int qaCount) || qaCount < 1)
+                //{
+                //    MessageBox.Show("Please enter a valid number (1 or more) for Q&A to generate.", "Validation Error",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    txtRelevantQANum.Focus();
+                //    return;
+                //}
+
+                // 1. Check if the input is a URL then read the JD and paste into txtJobDescription otherwise paste the JD into the txtJobDescription directly.
+                string input = txtJobDescription.Text.Trim();
+                bool isUrl = Uri.TryCreate(input, UriKind.Absolute, out Uri uriResult)
+                             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+                if (isUrl)
+                {
+                    picLoader.Visible = true;
+                    lblStatus.Text = "Reading job link... Please wait.";
+                    lblStatus.ForeColor = System.Drawing.Color.Blue;
+                    Application.DoEvents();
+
+                    // Attempt to read the URL using AI service. Here I have used Gemini model. You can use the model based on your need.
+                    string scrapedDescription = await ExtractFullJobDescriptionFromUrlAsync(input);
+
+                    if (scrapedDescription.StartsWith("ERROR:"))
+                    {
+                        picLoader.Visible = false;
+                        lblStatus.Text = "Read Failed.";
+                        lblStatus.ForeColor = System.Drawing.Color.Red;
+                        MessageBox.Show("Job profile or description can't be read. Please copy and paste the description.", "Link Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // SUCCESS: Automatically paste the read description into the field (txtJobDescription.Text) after reading the URL
+                    txtJobDescription.Text = scrapedDescription;
+                    lblStatus.Text = "Description extracted successfully!";
+                    lblStatus.ForeColor = System.Drawing.Color.ForestGreen;
+                    Application.DoEvents();
                 }
 
                 // Show loader and status
@@ -390,81 +186,103 @@ namespace cvApp
                 lblStatus.ForeColor = System.Drawing.Color.Blue;
                 Application.DoEvents();
 
-                // ------------------------------------------------------------------
-                // 1. Create Folder
-                // ------------------------------------------------------------------
-                string sanitizedCompany = SanitizeFolderName(txtCompany.Text);
-                string sanitizedPosition = SanitizeFolderName(txtPosition.Text);
-                string folderName = $"{sanitizedCompany}_{sanitizedPosition}";
-                string parentDirectory = Path.GetDirectoryName(txtCVPath.Text) ?? Directory.GetCurrentDirectory();
-                string outputFolder = Path.Combine(parentDirectory, folderName);
+                //// 2. Create Folder
+                //string sanitizedCompany = SanitizeFolderName(txtCompany.Text);
+                //string sanitizedPosition = SanitizeFolderName(txtPosition.Text);
+                //string folderName = $"{sanitizedCompany}_{sanitizedPosition}";
+                //string parentDirectory = Path.GetDirectoryName(txtCVPath.Text) ?? Directory.GetCurrentDirectory();
+                //string outputFolder = Path.Combine(parentDirectory, folderName);
 
-                // Create the folder if it doesn't exist
-                Directory.CreateDirectory(outputFolder);
-                lblStatus.Text = "Folder created: " + outputFolder;
+                //// Create the folder if it doesn't exist
+                //Directory.CreateDirectory(outputFolder);
+                //lblStatus.Text = "Folder created: " + outputFolder;
+                //Application.DoEvents();
+
+                // 2. Setup Shared Directory (Replaces your previous folder creation block)
+                SetUpOutputDirectory();
+
+                picLoader.Visible = true;
+                lblStatus.Text = "Folder prepared: " + outputFolder;
+                lblStatus.ForeColor = System.Drawing.Color.Blue;
                 Application.DoEvents();
 
-                string jobDescriptionInput = txtKeywords.Text.Trim();
-                string positionText = txtPosition.Text.Trim();
-                string companyText = txtCompany.Text.Trim();
-
-                // ------------------------------------------------------------------
-                // 2. Create Job Description Document
-                // ------------------------------------------------------------------
-                // Enforce PDF for JD document
+                // 3. Create Job Description Document using shared global variables
                 string jdFileName = $"JobDescription_{sanitizedCompany}_{sanitizedPosition}.pdf"; // Changed extension to .pdf
                 string jdFilePath = Path.Combine(outputFolder, jdFileName);
+
+                string jobDescriptionInput = txtJobDescription.Text.Trim();
+                string positionText = txtPosition.Text.Trim();
+                string companyText = txtCompany.Text.Trim();
 
                 // Pass 'true' for convertToPdf as per the request to make it PDF
                 CreateJobDescriptionDocument(jdFilePath, positionText, companyText, jobDescriptionInput, true);
                 lblStatus.Text = $"Job Description document created: {jdFileName}";
                 Application.DoEvents();
 
-                // ------------------------------------------------------------------
-                // 3. Get Keywords from Gemini and Process CV (Existing Logic)
-                // ------------------------------------------------------------------
-                string extractedKeywords = await ExtractKeywordsAsync($"Company: {companyText}, Position: {positionText}\n{jobDescriptionInput}");
-
-                if (extractedKeywords.StartsWith("ERROR:"))
+                // 4. If chkAddSkillToCv is checked then Gemini will read and extract keywords
+                bool isAddSkillToDoc = chkAddSkillToCv.Checked; // NEW: Get choice
+                string extractedKeywords = string.Empty;
+                if (isAddSkillToDoc)
                 {
-                    // Handle extraction failure
-                    throw new Exception(extractedKeywords);
+                    // Get Keywords from Gemini (you can use any tool) and Process CV (Existing Logic) if chkisAddSkillToDoc is checked
+                    extractedKeywords = await ExtractKeywordsAsync($"Company: {companyText}, Position: {positionText}\n{jobDescriptionInput}");
+
+                    if (extractedKeywords.StartsWith("ERROR:"))
+                    {
+                        //throw new Exception(extractedKeywords);
+                        picLoader.Visible = false;
+                        lblStatus.Text = "Keyword extraction failed.";
+                        lblStatus.ForeColor = System.Drawing.Color.Red;
+                        MessageBox.Show("AI model failed to extract the keyword", "Link Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Update the UI with AI keywords
+                    txtJobDescription.Text = extractedKeywords;
+
+                    // CHANGE: Set label to "Keywords"
+                    lblJobDescription.Text = "Keywords:";
+                    lblStatus.Text = $"Keywords extracted by {_aiModel.ModelName}. Processing CV/Resume...";
+                    Application.DoEvents();
                 }
 
-                txtKeywords.Text = extractedKeywords; // Update the UI with AI keywords
-                lblKeywords.Text = "Keywords:"; // CHANGE 1: Set label to "Keywords"
-                lblStatus.Text = "Keywords extracted by Gemini. Processing CV...";
-                Application.DoEvents();
-
-                // Get keyword placement choice
-                bool writeToFooter = chkWriteToFooter.Checked; // NEW: Get choice
-
                 // The ProcessCV now saves to the new folder
-                string finalCVPath = ProcessCV(txtCVPath.Text, companyText, positionText, extractedKeywords, chkConvertToPdf.Checked, outputFolder, writeToFooter); // NEW: Pass choice
+                string finalCVPath = ProcessCV(txtCVPath.Text, companyText, positionText, extractedKeywords, chkConvertToPdf.Checked, outputFolder, isAddSkillToDoc); // NEW: Pass choice
                 lblStatus.Text = $"CV processed and saved to: {finalCVPath}";
                 Application.DoEvents();
 
-
-                // ------------------------------------------------------------------
-                // 4. Generate Relevant Q&A Document
-                // ------------------------------------------------------------------
-                lblStatus.Text = $"Generating {qaCount} Q&A pairs with Gemini...";
-                Application.DoEvents();
-
-                string qaDocumentContent = await GenerateTechnicalQnA(positionText, jobDescriptionInput, qaCount);
-
-                if (qaDocumentContent.StartsWith("ERROR:"))
+                // 5. Generate Relevant Q&A Document
+                bool isGenerateQA = chkIsQAGenerate.Checked;
+                if (isGenerateQA)
                 {
-                    throw new Exception(qaDocumentContent);
+                    lblStatus.Text = $"Generating {Convert.ToInt32(txtRelevantQANum.Text)} Q&A pairs with {_aiModel.ModelName}...";
+                    Application.DoEvents();
+
+                    string qaDocumentContent = await GenerateTechnicalQnA(positionText, jobDescriptionInput, Convert.ToInt32(txtRelevantQANum.Text));
+
+                    if (qaDocumentContent.StartsWith("ERROR:"))
+                    {
+                        //throw new Exception(qaDocumentContent);
+                        picLoader.Visible = false;
+                        lblStatus.Text = "Generation technical QA failed";
+                        lblStatus.ForeColor = System.Drawing.Color.Red;
+                        MessageBox.Show("AI model failed to generate the technical QA", "Link Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Enforce PDF for Q&A document
+                    // Changed extension to .pdf
+                    string qaFileName = $"InterviewQA_{sanitizedCompany}_{sanitizedPosition}.pdf";
+                    string qaFilePath = Path.Combine(outputFolder, qaFileName);
+
+                    // CreateDocumentFromText now handles the DOCX-to-PDF conversion internally
+                    CreateDocumentFromText(qaFilePath, qaDocumentContent);
+                    lblStatus.Text = $"Q&A document created: {qaFileName}";
+                    Application.DoEvents();
                 }
 
-                // Enforce PDF for Q&A document
-                string qaFileName = $"InterviewQA_{sanitizedCompany}_{sanitizedPosition}.pdf"; // Changed extension to .pdf
-                string qaFilePath = Path.Combine(outputFolder, qaFileName);
-                // CreateDocumentFromText now handles the DOCX-to-PDF conversion internally
-                CreateDocumentFromText(qaFilePath, qaDocumentContent);
-                lblStatus.Text = $"Q&A document created: {qaFileName}";
-                Application.DoEvents();
                 // ------------------------------------------------------------------
 
                 // Final status update
@@ -533,24 +351,24 @@ namespace cvApp
             using (WordprocessingDocument doc = WordprocessingDocument.Create(docxPath, WordprocessingDocumentType.Document))
             {
                 MainDocumentPart mainPart = doc.AddMainDocumentPart();
-                // **FIX 1: Explicitly use OpenXML's Body**
+                // Explicitly use OpenXML's Body**
                 mainPart.Document = new DocumentFormat.OpenXml.Wordprocessing.Document(new DocumentFormat.OpenXml.Wordprocessing.Body());
 
-                // 1. Position - Bold
+                // Position - Bold
                 Paragraph pPosition = new Paragraph(new Run(
                     new RunProperties(new Bold()),
                     new Text(position) { Space = SpaceProcessingModeValues.Preserve }));
                 mainPart.Document.Body.Append(pPosition);
 
-                // 2. Company Name
+                // Company Name
                 Paragraph pCompany = new Paragraph(new Run(new Text(company) { Space = SpaceProcessingModeValues.Preserve }));
                 mainPart.Document.Body.Append(pCompany);
 
-                // 3. Two New Lines (Empty Paragraphs)
+                // Two New Lines (Empty Paragraphs)
                 mainPart.Document.Body.Append(new Paragraph());
                 mainPart.Document.Body.Append(new Paragraph());
 
-                // 4. Job Description
+                // Job Description
                 // Replace common line breaks with Word breaks
                 string formattedJD = jobDescription.Replace("\r\n", "\v").Replace("\n", "\v").Replace("\r", "\v");
 
@@ -559,7 +377,7 @@ namespace cvApp
                 {
                     pJD.Append(new Run(new Text(line) { Space = SpaceProcessingModeValues.Preserve }));
 
-                    // **FIX 2: Explicitly use OpenXML's Break**
+                    // Explicitly use OpenXML's Break**
                     pJD.Append(new Run(new DocumentFormat.OpenXml.Wordprocessing.Break()));
                 }
                 mainPart.Document.Body.Append(pJD);
@@ -623,23 +441,10 @@ namespace cvApp
             File.Delete(docxPath);
         }
 
-        /// <summary>
-        /// Converts a Word document (.docx) to a PDF file.
-        /// </summary>
-        /// <remarks>This method loads the specified Word document and saves it as a PDF file. Ensure that
-        /// the input file path is valid and accessible.</remarks>
-        /// <param name="docxPath">The full file path of the source Word document. The file must exist and be in .docx format.</param>
-        /// <param name="pdfPath">The full file path where the resulting PDF file will be saved. If the file already exists, it will be
-        /// overwritten.</param>
-        private void ConvertDocxToPdf(string docxPath, string pdfPath)
-        {
-            Document document = new Document();
-            document.LoadFromFile(docxPath);
-            document.SaveToFile(pdfPath, FileFormat.PDF);
-        }
+
 
         /// <summary>
-        /// Processes a CV file by appending metadata, optionally converting it to PDF, and saving it to a specified
+        /// Processes a CV file by appending metadata or parameter values, optionally converting it to PDF, and saving it to a specified
         /// output folder.
         /// </summary>
         /// <remarks>This method modifies the file name of the CV to include the specified company and
@@ -653,11 +458,11 @@ namespace cvApp
         /// <param name="convertToPdf">A value indicating whether the processed CV file should be converted to PDF format. If <see
         /// langword="true"/>, the DOCX file will be converted to PDF and the original DOCX file will be deleted.</param>
         /// <param name="outputFolder">The folder where the processed file will be saved. The folder must exist prior to calling this method.</param>
-        /// <param name="writeToFooter">A value indicating whether the keywords should be embedded in the footer of the CV file. If <see
+        /// <param name="isAddSkillToDoc">A value indicating whether the keywords should be embedded in the footer of the CV file. If <see
         /// langword="false"/>, the keywords will be embedded on the last page of the document.</param>
         /// <returns>The full path to the processed file. If <paramref name="convertToPdf"/> is <see langword="true"/>, the path
         /// will point to the generated PDF file; otherwise, it will point to the modified DOCX file.</returns>
-        private string ProcessCV(string sourcePath, string company, string position, string keywords, bool convertToPdf, string outputFolder, bool writeToFooter)
+        private string ProcessCV(string sourcePath, string company, string position, string keywords, bool convertToPdf, string outputFolder, bool isAddSkillToDoc)
         {
             string baseFileName = Path.GetFileNameWithoutExtension(sourcePath);
             string sanitizedCompany = SanitizeFileName(company);
@@ -669,13 +474,10 @@ namespace cvApp
 
             File.Copy(sourcePath, newFilePath, true);
 
-            if (writeToFooter)
+            if (isAddSkillToDoc)
             {
-                AddInvisibleKeywordsToFooter(newFilePath, keywords);
-            }
-            else
-            {
-                AddInvisibleKeywordsToLastPage(newFilePath, keywords); // NEW: Call new function
+                //AddInvisibleKeywordsToFooter(newFilePath, keywords);
+                AddInvisibleKeywordsToLastPage(newFilePath, keywords);
             }
 
             string outputPath = newFilePath;
@@ -683,18 +485,58 @@ namespace cvApp
             if (convertToPdf)
             {
                 string pdfFileName = $"{newBaseName}.pdf";
-                outputPath = Path.Combine(outputFolder, pdfFileName); // Save PDF to the new folder
+
+                // Save PDF to the new folder
+                outputPath = Path.Combine(outputFolder, pdfFileName);
 
                 ConvertDocxToPdf(newFilePath, outputPath);
 
-                File.Delete(newFilePath); // Clean up the temporary DOCX file
+                // Clean up the temporary DOCX file
+                File.Delete(newFilePath);
             }
 
             return outputPath;
         }
 
         /// <summary>
-        /// Extracts keywords from the provided job description, including technical skills, soft skills, and industry
+        /// Uses Gemini's URL context capabilities to read a webpage and return only the job description text.
+        /// </summary>
+        private async Task<string> ExtractFullJobDescriptionFromUrlAsync(string url)
+        {
+            try
+            {
+                var googleAI = new GoogleAI(apiKey: _aiModel.ApiKey);
+                // Using Flash for faster web reading
+                var model = googleAI.GenerativeModel(model: _aiModel.ModelName);
+
+                var prompt = $@"
+                    Access this URL: {url}
+                    Your task: Extract the full Job Description, Responsibilities, and Requirements.
+            
+                    Strict Rules:
+                    1. If you encounter a login wall (like LinkedIn login), or if you cannot access the page content, respond ONLY with the word 'FAILED'.
+                    2. If successful, return ONLY the plain text of the job description. Do not add any greetings or explanations.
+                ";
+
+                var response = await model.GenerateContent(prompt);
+                string result = response.Text.Trim();
+
+                if (result.Contains("FAILED") || string.IsNullOrWhiteSpace(result))
+                {
+                    return "ERROR: Manual paste required.";
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return "ERROR: Link inaccessible.";
+            }
+        }
+
+        /// <summary>
+        /// Extracts keywords from the provided job description, including technical skills, soft skills, and industry 
+        /// in case if Add skill to cv is checked
         /// terms.
         /// </summary>
         /// <remarks>This method uses the Gemini API to analyze the job description and extract relevant
@@ -704,15 +546,15 @@ namespace cvApp
         /// key is not set, or an exception occurs during processing, an error message is returned.</returns>
         private async Task<string> ExtractKeywordsAsync(string jobDescription)
         {
-            if (string.IsNullOrWhiteSpace(GeminiApiKey) || GeminiApiKey.Equals("YOUR_GEMINI_API_KEY_HERE"))
+            if (string.IsNullOrWhiteSpace(_aiModel.ApiKey))
             {
-                return "ERROR: Gemini API Key not set. Please update MainForm.cs.";
+                return $"ERROR: {_aiModel.ModelName} API Key not set. Please update MainForm.cs.";
             }
 
             try
             {
-                var googleAI = new GoogleAI(apiKey: GeminiApiKey);
-                var model = googleAI.GenerativeModel(model: Model.Gemini25Flash);
+                var googleAI = new GoogleAI(apiKey: _aiModel.ApiKey);
+                var model = googleAI.GenerativeModel(model: _aiModel.ModelName);
 
                 var prompt = $@"
                     You are an expert keyword extraction tool. 
@@ -752,15 +594,15 @@ namespace cvApp
         /// Gemini API key is not set, or an exception occurs during the API call, an error message is returned.</returns>
         private async Task<string> GenerateTechnicalQnA(string position, string jobDescription, int count)
         {
-            if (string.IsNullOrWhiteSpace(GeminiApiKey) || GeminiApiKey.Equals("YOUR_GEMINI_API_KEY_HERE"))
+            if (string.IsNullOrWhiteSpace(_aiModel.ApiKey))
             {
-                return "ERROR: Gemini API Key not set. Please update MainForm.cs.";
+                return $"ERROR: {_aiModel.ModelName} API Key not set. Please update MainForm.cs.";
             }
 
             try
             {
-                var googleAI = new GoogleAI(apiKey: GeminiApiKey);
-                var model = googleAI.GenerativeModel(model: Model.Gemini25Pro); // Use a more capable model for Q&A
+                var googleAI = new GoogleAI(apiKey: _aiModel.ApiKey);
+                var model = googleAI.GenerativeModel(model: _aiModel.ModelName); // Use a more capable model for Q&A
 
                 var prompt = $@"
                     You are an expert technical interviewer assistant.
@@ -961,15 +803,213 @@ namespace cvApp
         {
             txtCompany.Text = string.Empty;
             txtPosition.Text = string.Empty;
-            txtKeywords.Text = string.Empty;
+            txtJobDescription.Text = string.Empty;
             txtCVPath.Text = string.Empty;
-            txtRelevantQANum.Text = "5";
             chkConvertToPdf.Checked = false;
-            chkWriteToFooter.Checked = true; // Reset to default (footer)
-            lblKeywords.Text = "Job Description:"; // CHANGE 2: Reset label text
+            chkAddSkillToCv.Checked = true; // Reset to default (footer)
+            chkIsQAGenerate.Checked = false;
+            lblRelevantQANum.Visible = false;
+            txtRelevantQANum.Visible = false;
+            txtRelevantQANum.Text = "";
+            lblJobDescription.Text = "Job Description:"; // CHANGE 2: Reset label text
             lblStatus.Text = string.Empty;
             picLoader.Visible = false;
 
+            MessageBox.Show("All fields have been cleared.", "Clear", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void chkIsQAGenerate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkIsQAGenerate.Checked)
+            {
+                lblRelevantQANum.Visible = true;
+                txtRelevantQANum.Visible = true;
+                txtRelevantQANum.Text = _config["InitialFAQNumber"];
+            }
+            else
+            {
+                lblRelevantQANum.Visible = false;
+                txtRelevantQANum.Visible = false;
+                txtRelevantQANum.Text = "";
+            }
+        }
+        #endregion
+
+        #region Helper methods
+        /// <summary>
+        /// Converts a Word document (.docx) to a PDF file.
+        /// </summary>
+        /// <remarks>This method loads the specified Word document and saves it as a PDF file. Ensure that
+        /// the input file path is valid and accessible.</remarks>
+        /// <param name="docxPath">The full file path of the source Word document. The file must exist and be in .docx format.</param>
+        /// <param name="pdfPath">The full file path where the resulting PDF file will be saved. If the file already exists, it will be
+        /// overwritten.</param>
+        private void ConvertDocxToPdf(string docxPath, string pdfPath)
+        {
+            Document document = new Document();
+            document.LoadFromFile(docxPath);
+            document.SaveToFile(pdfPath, FileFormat.PDF);
+        }
+
+        /// <summary>
+        /// Determines whether the specified string represents an integer greater than or equal to one.
+        /// </summary>
+        /// <param name="text">The string to validate as a positive integer.</param>
+        /// <returns>True if the string is a valid integer greater than or equal to one; otherwise, false.</returns>
+        private bool IsPositiveIntAtLeastOne(string? text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return false;
+
+            return int.TryParse(text.Trim(), out var n) && n >= 1;
+        }
+        #endregion
+
+        private void btnProcCoverLetter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string templatePath = txtCoverLetterPath.Text; // Path from the Browse button
+                if (string.IsNullOrEmpty(templatePath) || !File.Exists(templatePath))
+                {
+                    MessageBox.Show("Please select a valid template file.");
+                    return;
+                }
+
+                picLoader.Visible = true;
+                lblStatus.Text = "Processing Cover Letter...";
+                lblStatus.ForeColor = System.Drawing.Color.Blue;
+                Application.DoEvents();
+
+                //// 1. Define Output Path (Folder where CV/Job description resides)
+                //string outputFolder = Path.GetDirectoryName(txtCVPath.Text); // Assuming txtCVPath holds the target folder
+                //string fileName = $"Cover_Letter_{DateTime.Now:yyyyMMdd_HHmmss}.docx";
+                //string targetFilePath = Path.Combine(outputFolder, fileName);
+
+                // 1. Ensure the shared folder is ready
+                SetUpOutputDirectory();
+
+                //// 2. Copy Template to the target folder
+                //File.Copy(templatePath, targetFilePath, true);
+
+                // 2. Define target file path
+                string fileName = $"Cover_Letter_{sanitizedCompany}_{sanitizedPosition}.docx";
+                string targetFilePath = Path.Combine(outputFolder, fileName);
+
+                // 3. Copy Template to the target folder
+                File.Copy(templatePath, targetFilePath, true);
+
+                // 4. Perform Search and Replace using a Library (e.g., Xceed.Words.NET / DocX)
+                using (var document = DocX.Load(targetFilePath))
+                {
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{Date}",
+                        NewValue = dtpDate.Value.ToString("MMMM dd, yyyy")
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{AddressTo}",
+                        NewValue = txtAddressTo.Text
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{Salutation}",
+                        NewValue = txtSalutation.Text
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{JobSource}",
+                        NewValue = txtJobSource.Text
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{JobPosition}",
+                        NewValue = txtJobPosition.Text
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{JobCompanyLoc}",
+                        NewValue = txtJobCompanyLoc.Text
+                    });
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{Skills}",
+                        NewValue = txtSkills.Text
+                    });
+
+                    // Conditional replacement for ClientOrg
+                    string orgText = chkClientOrg.Checked ? "organization" : "client";
+                    document.ReplaceText(new StringReplaceTextOptions
+                    {
+                        SearchValue = "{ClientOrg}",
+                        NewValue = orgText
+                    });
+
+                    document.Save();
+                }
+
+                // 5. Handle PDF Conversion if checked
+                if (chkLetterToPdf.Checked)
+                {
+                    string pdfPath = Path.ChangeExtension(targetFilePath, ".pdf");
+                    ConvertDocxToPdf(targetFilePath, pdfPath);
+                    // Optionally delete the docx after conversion
+                    // File.Delete(targetFilePath); 
+                }
+
+                picLoader.Visible = false;
+                lblStatus.Text = "✓ Creating Cover Letter Finished!";
+                lblStatus.ForeColor = System.Drawing.Color.Green;
+                System.Diagnostics.Process.Start("explorer.exe", outputFolder);
+
+                MessageBox.Show("Cover letter created successfully!", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                picLoader.Visible = false;
+                lblStatus.Text = $"Error: {ex.Message}";
+                lblStatus.ForeColor = System.Drawing.Color.Red;
+                MessageBox.Show($"Error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnBrowseCoverLetter_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
+                ofd.Title = "Select Cover Letter Template";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    txtCoverLetterPath.Text = ofd.FileName;
+                }
+            }
+        }
+
+        private void btnLetterClear_Click(object sender, EventArgs e)
+        {
+            // Reset global variables
+            outputFolder = string.Empty;
+            sanitizedCompany = string.Empty;
+            sanitizedPosition = string.Empty;
+
+            if (oCoverLetter != null)
+            {
+                string rawAddress = oCoverLetter.AddressTo ?? string.Empty;
+                string formattedAddress = rawAddress.Replace(".", Environment.NewLine);
+                txtAddressTo.Text = formattedAddress;
+                txtSalutation.Text = oCoverLetter.Salutation ?? string.Empty;
+                txtJobSource.Text = oCoverLetter.JobSource ?? string.Empty;
+                txtJobPosition.Text = oCoverLetter.Position ?? string.Empty;
+                txtJobCompanyLoc.Text = oCoverLetter.CompanyLocation ?? string.Empty;
+                txtSkills.Text = oCoverLetter.Skills ?? string.Empty;
+                chkClientOrg.Checked = oCoverLetter.Organization ?? false;
+                chkLetterToPdf.Checked = oCoverLetter.ConvertToPdf ?? false;
+            }
             MessageBox.Show("All fields have been cleared.", "Clear", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

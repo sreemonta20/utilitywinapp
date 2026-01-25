@@ -28,139 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
+            picLoader = new PictureBox();
+            lblStatus = new Label();
+            grpBoxCVResume = new GroupBox();
+            chkIsQAGenerate = new CheckBox();
+            lblRelevantQANum = new Label();
+            txtRelevantQANum = new TextBox();
             lblCompany = new Label();
             txtCompany = new TextBox();
             lblPosition = new Label();
             txtPosition = new TextBox();
-            lblKeywords = new Label();
-            txtKeywords = new TextBox();
+            lblJobDescription = new Label();
+            txtJobDescription = new TextBox();
             lblCVPath = new Label();
             txtCVPath = new TextBox();
             btnBrowse = new Button();
             chkConvertToPdf = new CheckBox();
-            chkWriteToFooter = new CheckBox();
             btnProcess = new Button();
-            picLoader = new PictureBox();
-            lblStatus = new Label();
-            lblRelevantQANum = new Label();
-            txtRelevantQANum = new TextBox();
             btnClear = new Button();
+            chkAddSkillToCv = new CheckBox();
+            grpBoxCoverLetter = new GroupBox();
+            btnBrowseCoverLetter = new Button();
+            txtCoverLetterPath = new TextBox();
+            lblCoverLetterPath = new Label();
+            chkLetterToPdf = new CheckBox();
+            chkClientOrg = new CheckBox();
+            txtSkills = new TextBox();
+            btnLetterClear = new Button();
+            btnProcCoverLetter = new Button();
+            lblSkills = new Label();
+            lblJobCompanyLoc = new Label();
+            txtJobCompanyLoc = new TextBox();
+            lblJobPosition = new Label();
+            txtJobPosition = new TextBox();
+            lblJobSource = new Label();
+            txtJobSource = new TextBox();
+            lblSalutation = new Label();
+            txtSalutation = new TextBox();
+            txtAddressTo = new TextBox();
+            lblLetterTo = new Label();
+            dtpDate = new DateTimePicker();
+            lblDate = new Label();
             ((System.ComponentModel.ISupportInitialize)picLoader).BeginInit();
+            grpBoxCVResume.SuspendLayout();
+            grpBoxCoverLetter.SuspendLayout();
             SuspendLayout();
-            // 
-            // lblCompany
-            // 
-            lblCompany.AutoSize = true;
-            lblCompany.Location = new Point(20, 20);
-            lblCompany.Name = "lblCompany";
-            lblCompany.Size = new Size(100, 15);
-            lblCompany.TabIndex = 0;
-            lblCompany.Text = "Company Name :";
-            // 
-            // txtCompany
-            // 
-            txtCompany.Location = new Point(180, 17);
-            txtCompany.Name = "txtCompany";
-            txtCompany.Size = new Size(480, 23);
-            txtCompany.TabIndex = 1;
-            // 
-            // lblPosition
-            // 
-            lblPosition.AutoSize = true;
-            lblPosition.Location = new Point(20, 60);
-            lblPosition.Name = "lblPosition";
-            lblPosition.Size = new Size(53, 15);
-            lblPosition.TabIndex = 2;
-            lblPosition.Text = "Position:";
-            // 
-            // txtPosition
-            // 
-            txtPosition.Location = new Point(180, 57);
-            txtPosition.Name = "txtPosition";
-            txtPosition.Size = new Size(480, 23);
-            txtPosition.TabIndex = 3;
-            // 
-            // lblKeywords
-            // 
-            lblKeywords.AutoSize = true;
-            lblKeywords.Location = new Point(20, 100);
-            lblKeywords.Name = "lblKeywords";
-            lblKeywords.Size = new Size(91, 15);
-            lblKeywords.TabIndex = 4;
-            lblKeywords.Text = "Job Description:";
-            // 
-            // txtKeywords
-            // 
-            txtKeywords.Location = new Point(180, 100);
-            txtKeywords.Multiline = true;
-            txtKeywords.Name = "txtKeywords";
-            txtKeywords.ScrollBars = ScrollBars.Vertical;
-            txtKeywords.Size = new Size(480, 120);
-            txtKeywords.TabIndex = 5;
-            // 
-            // lblCVPath
-            // 
-            lblCVPath.AutoSize = true;
-            lblCVPath.Location = new Point(20, 240);
-            lblCVPath.Name = "lblCVPath";
-            lblCVPath.Size = new Size(73, 15);
-            lblCVPath.TabIndex = 6;
-            lblCVPath.Text = "CV File Path:";
-            // 
-            // txtCVPath
-            // 
-            txtCVPath.Location = new Point(180, 240);
-            txtCVPath.Name = "txtCVPath";
-            txtCVPath.ReadOnly = true;
-            txtCVPath.Size = new Size(390, 23);
-            txtCVPath.TabIndex = 7;
-            // 
-            // btnBrowse
-            // 
-            btnBrowse.Location = new Point(580, 238);
-            btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(80, 28);
-            btnBrowse.TabIndex = 8;
-            btnBrowse.Text = "Browse...";
-            btnBrowse.UseVisualStyleBackColor = true;
-            btnBrowse.Click += btnBrowse_Click;
-            // 
-            // chkConvertToPdf
-            // 
-            chkConvertToPdf.AutoSize = true;
-            chkConvertToPdf.Location = new Point(20, 280);
-            chkConvertToPdf.Name = "chkConvertToPdf";
-            chkConvertToPdf.Size = new Size(106, 19);
-            chkConvertToPdf.TabIndex = 9;
-            chkConvertToPdf.Text = "Convert to PDF";
-            chkConvertToPdf.UseVisualStyleBackColor = true;
-            // 
-            // chkWriteToFooter
-            // 
-            chkWriteToFooter.AutoSize = true;
-            chkWriteToFooter.Checked = true;
-            chkWriteToFooter.CheckState = CheckState.Checked;
-            chkWriteToFooter.Location = new Point(20, 305);
-            chkWriteToFooter.Name = "chkWriteToFooter";
-            chkWriteToFooter.Size = new Size(267, 19);
-            chkWriteToFooter.TabIndex = 10;
-            chkWriteToFooter.Text = "Write keywords to Footer (default) / Last Page";
-            chkWriteToFooter.UseVisualStyleBackColor = true;
-            // 
-            // btnProcess
-            // 
-            btnProcess.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnProcess.Location = new Point(239, 374);
-            btnProcess.Name = "btnProcess";
-            btnProcess.Size = new Size(140, 35);
-            btnProcess.TabIndex = 13;
-            btnProcess.Text = "Process CV";
-            btnProcess.UseVisualStyleBackColor = true;
-            btnProcess.Click += btnProcess_Click;
             // 
             // picLoader
             // 
-            picLoader.Location = new Point(314, 415);
+            picLoader.Location = new Point(446, 479);
             picLoader.Name = "picLoader";
             picLoader.Size = new Size(140, 40);
             picLoader.SizeMode = PictureBoxSizeMode.Zoom;
@@ -172,90 +88,465 @@
             // 
             lblStatus.Font = new Font("Segoe UI", 9F);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(20, 486);
+            lblStatus.Location = new Point(12, 524);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(744, 40);
+            lblStatus.Size = new Size(1089, 40);
             lblStatus.TabIndex = 16;
             lblStatus.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // grpBoxCVResume
+            // 
+            grpBoxCVResume.Controls.Add(chkIsQAGenerate);
+            grpBoxCVResume.Controls.Add(lblRelevantQANum);
+            grpBoxCVResume.Controls.Add(txtRelevantQANum);
+            grpBoxCVResume.Controls.Add(lblCompany);
+            grpBoxCVResume.Controls.Add(txtCompany);
+            grpBoxCVResume.Controls.Add(lblPosition);
+            grpBoxCVResume.Controls.Add(txtPosition);
+            grpBoxCVResume.Controls.Add(lblJobDescription);
+            grpBoxCVResume.Controls.Add(txtJobDescription);
+            grpBoxCVResume.Controls.Add(lblCVPath);
+            grpBoxCVResume.Controls.Add(txtCVPath);
+            grpBoxCVResume.Controls.Add(btnBrowse);
+            grpBoxCVResume.Controls.Add(chkConvertToPdf);
+            grpBoxCVResume.Controls.Add(btnProcess);
+            grpBoxCVResume.Controls.Add(btnClear);
+            grpBoxCVResume.Controls.Add(chkAddSkillToCv);
+            grpBoxCVResume.Location = new Point(12, 4);
+            grpBoxCVResume.Name = "grpBoxCVResume";
+            grpBoxCVResume.Size = new Size(678, 462);
+            grpBoxCVResume.TabIndex = 22;
+            grpBoxCVResume.TabStop = false;
+            grpBoxCVResume.Text = "CV / Resume";
+            // 
+            // chkIsQAGenerate
+            // 
+            chkIsQAGenerate.AutoSize = true;
+            chkIsQAGenerate.Location = new Point(15, 329);
+            chkIsQAGenerate.Name = "chkIsQAGenerate";
+            chkIsQAGenerate.Size = new Size(93, 19);
+            chkIsQAGenerate.TabIndex = 46;
+            chkIsQAGenerate.Text = "Generate Q&A";
+            chkIsQAGenerate.UseVisualStyleBackColor = true;
+            chkIsQAGenerate.CheckedChanged += chkIsQAGenerate_CheckedChanged;
             // 
             // lblRelevantQANum
             // 
             lblRelevantQANum.AutoSize = true;
-            lblRelevantQANum.Location = new Point(20, 336);
+            lblRelevantQANum.Location = new Point(15, 357);
             lblRelevantQANum.Name = "lblRelevantQANum";
             lblRelevantQANum.Size = new Size(139, 15);
-            lblRelevantQANum.TabIndex = 11;
+            lblRelevantQANum.TabIndex = 40;
             lblRelevantQANum.Text = "Relevant Q&A to Generate:";
+            lblRelevantQANum.Visible = false;
             // 
             // txtRelevantQANum
             // 
-            txtRelevantQANum.Location = new Point(180, 333);
+            txtRelevantQANum.Location = new Point(175, 354);
             txtRelevantQANum.Name = "txtRelevantQANum";
             txtRelevantQANum.Size = new Size(50, 23);
-            txtRelevantQANum.TabIndex = 12;
-            txtRelevantQANum.Text = "5";
+            txtRelevantQANum.TabIndex = 42;
+            txtRelevantQANum.Visible = false;
+            // 
+            // lblCompany
+            // 
+            lblCompany.AutoSize = true;
+            lblCompany.Location = new Point(15, 22);
+            lblCompany.Name = "lblCompany";
+            lblCompany.Size = new Size(100, 15);
+            lblCompany.TabIndex = 19;
+            lblCompany.Text = "Company Name :";
+            // 
+            // txtCompany
+            // 
+            txtCompany.Location = new Point(175, 19);
+            txtCompany.Name = "txtCompany";
+            txtCompany.Size = new Size(480, 23);
+            txtCompany.TabIndex = 20;
+            // 
+            // lblPosition
+            // 
+            lblPosition.AutoSize = true;
+            lblPosition.Location = new Point(15, 62);
+            lblPosition.Name = "lblPosition";
+            lblPosition.Size = new Size(53, 15);
+            lblPosition.TabIndex = 22;
+            lblPosition.Text = "Position:";
+            // 
+            // txtPosition
+            // 
+            txtPosition.Location = new Point(175, 59);
+            txtPosition.Name = "txtPosition";
+            txtPosition.Size = new Size(480, 23);
+            txtPosition.TabIndex = 24;
+            // 
+            // lblJobDescription
+            // 
+            lblJobDescription.AutoSize = true;
+            lblJobDescription.Location = new Point(15, 102);
+            lblJobDescription.Name = "lblJobDescription";
+            lblJobDescription.Size = new Size(91, 15);
+            lblJobDescription.TabIndex = 26;
+            lblJobDescription.Text = "Job Description:";
+            // 
+            // txtJobDescription
+            // 
+            txtJobDescription.Location = new Point(175, 102);
+            txtJobDescription.Multiline = true;
+            txtJobDescription.Name = "txtJobDescription";
+            txtJobDescription.ScrollBars = ScrollBars.Vertical;
+            txtJobDescription.Size = new Size(480, 120);
+            txtJobDescription.TabIndex = 29;
+            // 
+            // lblCVPath
+            // 
+            lblCVPath.AutoSize = true;
+            lblCVPath.Location = new Point(15, 242);
+            lblCVPath.Name = "lblCVPath";
+            lblCVPath.Size = new Size(120, 15);
+            lblCVPath.TabIndex = 31;
+            lblCVPath.Text = "CV/Resume File Path:";
+            // 
+            // txtCVPath
+            // 
+            txtCVPath.Location = new Point(175, 242);
+            txtCVPath.Name = "txtCVPath";
+            txtCVPath.ReadOnly = true;
+            txtCVPath.Size = new Size(390, 23);
+            txtCVPath.TabIndex = 32;
+            // 
+            // btnBrowse
+            // 
+            btnBrowse.Location = new Point(575, 240);
+            btnBrowse.Name = "btnBrowse";
+            btnBrowse.Size = new Size(80, 28);
+            btnBrowse.TabIndex = 35;
+            btnBrowse.Text = "Browse...";
+            btnBrowse.UseVisualStyleBackColor = true;
+            btnBrowse.Click += btnBrowse_Click;
+            // 
+            // chkConvertToPdf
+            // 
+            chkConvertToPdf.AutoSize = true;
+            chkConvertToPdf.Location = new Point(15, 282);
+            chkConvertToPdf.Name = "chkConvertToPdf";
+            chkConvertToPdf.Size = new Size(106, 19);
+            chkConvertToPdf.TabIndex = 37;
+            chkConvertToPdf.Text = "Convert to PDF";
+            chkConvertToPdf.UseVisualStyleBackColor = true;
+            // 
+            // btnProcess
+            // 
+            btnProcess.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnProcess.Location = new Point(347, 418);
+            btnProcess.Name = "btnProcess";
+            btnProcess.Size = new Size(140, 35);
+            btnProcess.TabIndex = 44;
+            btnProcess.Text = "Process CV";
+            btnProcess.UseVisualStyleBackColor = true;
+            btnProcess.Click += btnProcess_Click;
             // 
             // btnClear
             // 
             btnClear.Font = new Font("Segoe UI", 10F);
-            btnClear.Location = new Point(399, 374);
+            btnClear.Location = new Point(507, 418);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(140, 35);
-            btnClear.TabIndex = 14;
+            btnClear.TabIndex = 45;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
+            // 
+            // chkAddSkillToCv
+            // 
+            chkAddSkillToCv.AutoSize = true;
+            chkAddSkillToCv.Checked = true;
+            chkAddSkillToCv.CheckState = CheckState.Checked;
+            chkAddSkillToCv.Location = new Point(15, 307);
+            chkAddSkillToCv.Name = "chkAddSkillToCv";
+            chkAddSkillToCv.Size = new Size(175, 19);
+            chkAddSkillToCv.TabIndex = 38;
+            chkAddSkillToCv.Text = "Add skills to the CV/Resume";
+            chkAddSkillToCv.UseVisualStyleBackColor = true;
+            // 
+            // grpBoxCoverLetter
+            // 
+            grpBoxCoverLetter.Controls.Add(btnBrowseCoverLetter);
+            grpBoxCoverLetter.Controls.Add(txtCoverLetterPath);
+            grpBoxCoverLetter.Controls.Add(lblCoverLetterPath);
+            grpBoxCoverLetter.Controls.Add(chkLetterToPdf);
+            grpBoxCoverLetter.Controls.Add(chkClientOrg);
+            grpBoxCoverLetter.Controls.Add(txtSkills);
+            grpBoxCoverLetter.Controls.Add(btnLetterClear);
+            grpBoxCoverLetter.Controls.Add(btnProcCoverLetter);
+            grpBoxCoverLetter.Controls.Add(lblSkills);
+            grpBoxCoverLetter.Controls.Add(lblJobCompanyLoc);
+            grpBoxCoverLetter.Controls.Add(txtJobCompanyLoc);
+            grpBoxCoverLetter.Controls.Add(lblJobPosition);
+            grpBoxCoverLetter.Controls.Add(txtJobPosition);
+            grpBoxCoverLetter.Controls.Add(lblJobSource);
+            grpBoxCoverLetter.Controls.Add(txtJobSource);
+            grpBoxCoverLetter.Controls.Add(lblSalutation);
+            grpBoxCoverLetter.Controls.Add(txtSalutation);
+            grpBoxCoverLetter.Controls.Add(txtAddressTo);
+            grpBoxCoverLetter.Controls.Add(lblLetterTo);
+            grpBoxCoverLetter.Controls.Add(dtpDate);
+            grpBoxCoverLetter.Controls.Add(lblDate);
+            grpBoxCoverLetter.Location = new Point(705, 4);
+            grpBoxCoverLetter.Name = "grpBoxCoverLetter";
+            grpBoxCoverLetter.Size = new Size(396, 462);
+            grpBoxCoverLetter.TabIndex = 23;
+            grpBoxCoverLetter.TabStop = false;
+            grpBoxCoverLetter.Text = "Cover Letter";
+            // 
+            // btnBrowseCoverLetter
+            // 
+            btnBrowseCoverLetter.Location = new Point(306, 381);
+            btnBrowseCoverLetter.Name = "btnBrowseCoverLetter";
+            btnBrowseCoverLetter.Size = new Size(80, 28);
+            btnBrowseCoverLetter.TabIndex = 54;
+            btnBrowseCoverLetter.Text = "Browse...";
+            btnBrowseCoverLetter.UseVisualStyleBackColor = true;
+            btnBrowseCoverLetter.Click += btnBrowseCoverLetter_Click;
+            // 
+            // txtCoverLetterPath
+            // 
+            txtCoverLetterPath.Location = new Point(122, 385);
+            txtCoverLetterPath.Name = "txtCoverLetterPath";
+            txtCoverLetterPath.ReadOnly = true;
+            txtCoverLetterPath.Size = new Size(164, 23);
+            txtCoverLetterPath.TabIndex = 53;
+            // 
+            // lblCoverLetterPath
+            // 
+            lblCoverLetterPath.AutoSize = true;
+            lblCoverLetterPath.Location = new Point(6, 390);
+            lblCoverLetterPath.Name = "lblCoverLetterPath";
+            lblCoverLetterPath.Size = new Size(67, 15);
+            lblCoverLetterPath.TabIndex = 52;
+            lblCoverLetterPath.Text = "Letter Path:";
+            // 
+            // chkLetterToPdf
+            // 
+            chkLetterToPdf.AutoSize = true;
+            chkLetterToPdf.Location = new Point(268, 353);
+            chkLetterToPdf.Name = "chkLetterToPdf";
+            chkLetterToPdf.Size = new Size(106, 19);
+            chkLetterToPdf.TabIndex = 51;
+            chkLetterToPdf.Text = "Convert to PDF";
+            chkLetterToPdf.UseVisualStyleBackColor = true;
+            // 
+            // chkClientOrg
+            // 
+            chkClientOrg.AutoSize = true;
+            chkClientOrg.Location = new Point(122, 353);
+            chkClientOrg.Name = "chkClientOrg";
+            chkClientOrg.Size = new Size(102, 19);
+            chkClientOrg.TabIndex = 50;
+            chkClientOrg.Text = "Organization ?";
+            chkClientOrg.UseVisualStyleBackColor = true;
+            // 
+            // txtSkills
+            // 
+            txtSkills.Location = new Point(122, 276);
+            txtSkills.Multiline = true;
+            txtSkills.Name = "txtSkills";
+            txtSkills.ScrollBars = ScrollBars.Vertical;
+            txtSkills.Size = new Size(264, 63);
+            txtSkills.TabIndex = 49;
+            // 
+            // btnLetterClear
+            // 
+            btnLetterClear.Font = new Font("Segoe UI", 10F);
+            btnLetterClear.Location = new Point(259, 418);
+            btnLetterClear.Name = "btnLetterClear";
+            btnLetterClear.Size = new Size(127, 35);
+            btnLetterClear.TabIndex = 48;
+            btnLetterClear.Text = "Clear";
+            btnLetterClear.UseVisualStyleBackColor = true;
+            btnLetterClear.Click += btnLetterClear_Click;
+            // 
+            // btnProcCoverLetter
+            // 
+            btnProcCoverLetter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnProcCoverLetter.Location = new Point(122, 418);
+            btnProcCoverLetter.Name = "btnProcCoverLetter";
+            btnProcCoverLetter.Size = new Size(116, 35);
+            btnProcCoverLetter.TabIndex = 48;
+            btnProcCoverLetter.Text = "Process Letter";
+            btnProcCoverLetter.UseVisualStyleBackColor = true;
+            btnProcCoverLetter.Click += btnProcCoverLetter_Click;
+            // 
+            // lblSkills
+            // 
+            lblSkills.AutoSize = true;
+            lblSkills.Location = new Point(6, 276);
+            lblSkills.Name = "lblSkills";
+            lblSkills.Size = new Size(36, 15);
+            lblSkills.TabIndex = 39;
+            lblSkills.Text = "Skills:";
+            // 
+            // lblJobCompanyLoc
+            // 
+            lblJobCompanyLoc.AutoSize = true;
+            lblJobCompanyLoc.Location = new Point(6, 240);
+            lblJobCompanyLoc.Name = "lblJobCompanyLoc";
+            lblJobCompanyLoc.Size = new Size(113, 15);
+            lblJobCompanyLoc.TabIndex = 37;
+            lblJobCompanyLoc.Text = "Company/Location:";
+            // 
+            // txtJobCompanyLoc
+            // 
+            txtJobCompanyLoc.Location = new Point(122, 237);
+            txtJobCompanyLoc.Name = "txtJobCompanyLoc";
+            txtJobCompanyLoc.Size = new Size(264, 23);
+            txtJobCompanyLoc.TabIndex = 36;
+            // 
+            // lblJobPosition
+            // 
+            lblJobPosition.AutoSize = true;
+            lblJobPosition.Location = new Point(6, 200);
+            lblJobPosition.Name = "lblJobPosition";
+            lblJobPosition.Size = new Size(53, 15);
+            lblJobPosition.TabIndex = 35;
+            lblJobPosition.Text = "Position:";
+            // 
+            // txtJobPosition
+            // 
+            txtJobPosition.Location = new Point(122, 197);
+            txtJobPosition.Name = "txtJobPosition";
+            txtJobPosition.Size = new Size(264, 23);
+            txtJobPosition.TabIndex = 34;
+            // 
+            // lblJobSource
+            // 
+            lblJobSource.AutoSize = true;
+            lblJobSource.Location = new Point(6, 161);
+            lblJobSource.Name = "lblJobSource";
+            lblJobSource.Size = new Size(67, 15);
+            lblJobSource.TabIndex = 33;
+            lblJobSource.Text = "Job Source:";
+            // 
+            // txtJobSource
+            // 
+            txtJobSource.Location = new Point(122, 158);
+            txtJobSource.Name = "txtJobSource";
+            txtJobSource.Size = new Size(264, 23);
+            txtJobSource.TabIndex = 32;
+            // 
+            // lblSalutation
+            // 
+            lblSalutation.AutoSize = true;
+            lblSalutation.Location = new Point(6, 122);
+            lblSalutation.Name = "lblSalutation";
+            lblSalutation.Size = new Size(63, 15);
+            lblSalutation.TabIndex = 31;
+            lblSalutation.Text = "Salutation:";
+            // 
+            // txtSalutation
+            // 
+            txtSalutation.Location = new Point(122, 119);
+            txtSalutation.Name = "txtSalutation";
+            txtSalutation.Size = new Size(264, 23);
+            txtSalutation.TabIndex = 30;
+            // 
+            // txtAddressTo
+            // 
+            txtAddressTo.Location = new Point(122, 56);
+            txtAddressTo.Multiline = true;
+            txtAddressTo.Name = "txtAddressTo";
+            txtAddressTo.ScrollBars = ScrollBars.Vertical;
+            txtAddressTo.Size = new Size(264, 47);
+            txtAddressTo.TabIndex = 29;
+            // 
+            // lblLetterTo
+            // 
+            lblLetterTo.AutoSize = true;
+            lblLetterTo.Location = new Point(6, 59);
+            lblLetterTo.Name = "lblLetterTo";
+            lblLetterTo.Size = new Size(67, 15);
+            lblLetterTo.TabIndex = 25;
+            lblLetterTo.Text = "Address To:";
+            // 
+            // dtpDate
+            // 
+            dtpDate.Location = new Point(122, 19);
+            dtpDate.Name = "dtpDate";
+            dtpDate.Size = new Size(200, 23);
+            dtpDate.TabIndex = 24;
+            // 
+            // lblDate
+            // 
+            lblDate.AutoSize = true;
+            lblDate.Location = new Point(6, 22);
+            lblDate.Name = "lblDate";
+            lblDate.Size = new Size(34, 15);
+            lblDate.TabIndex = 23;
+            lblDate.Text = "Date:";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 550);
-            Controls.Add(lblRelevantQANum);
-            Controls.Add(txtRelevantQANum);
-            Controls.Add(lblCompany);
-            Controls.Add(txtCompany);
-            Controls.Add(lblPosition);
-            Controls.Add(txtPosition);
-            Controls.Add(lblKeywords);
-            Controls.Add(txtKeywords);
-            Controls.Add(lblCVPath);
-            Controls.Add(txtCVPath);
-            Controls.Add(btnBrowse);
-            Controls.Add(chkConvertToPdf);
-            Controls.Add(btnProcess);
+            ClientSize = new Size(1113, 567);
+            Controls.Add(grpBoxCoverLetter);
             Controls.Add(picLoader);
             Controls.Add(lblStatus);
-            Controls.Add(btnClear);
-            Controls.Add(chkWriteToFooter);
+            Controls.Add(grpBoxCVResume);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "CV Customizer Tool";
+            Text = "CV/Resume Customizer Tool";
             ((System.ComponentModel.ISupportInitialize)picLoader).EndInit();
+            grpBoxCVResume.ResumeLayout(false);
+            grpBoxCVResume.PerformLayout();
+            grpBoxCoverLetter.ResumeLayout(false);
+            grpBoxCoverLetter.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
+        private PictureBox picLoader;
+        private Label lblStatus;
+        private GroupBox grpBoxCVResume;
+        private CheckBox chkIsQAGenerate;
+        private Label lblRelevantQANum;
+        private TextBox txtRelevantQANum;
         private Label lblCompany;
         private TextBox txtCompany;
         private Label lblPosition;
         private TextBox txtPosition;
-        private Label lblKeywords;
-        private TextBox txtKeywords;
+        private Label lblJobDescription;
+        private TextBox txtJobDescription;
         private Label lblCVPath;
         private TextBox txtCVPath;
         private Button btnBrowse;
         private CheckBox chkConvertToPdf;
-        private CheckBox chkWriteToFooter;
         private Button btnProcess;
-        private PictureBox picLoader;
-        private Label lblStatus;
-        private Label lblRelevantQANum; // NEW
-        private TextBox txtRelevantQANum; // NEW
-        private Button btnClear; // NEW
+        private Button btnClear;
+        private CheckBox chkAddSkillToCv;
+        private GroupBox grpBoxCoverLetter;
+        private DateTimePicker dtpDate;
+        private Label lblDate;
+        private TextBox txtAddressTo;
+        private Label lblLetterTo;
+        private Label lblSalutation;
+        private TextBox txtSalutation;
+        private Button btnLetterClear;
+        private Button btnProcCoverLetter;
+        private Label lblSkills;
+        private Label lblJobCompanyLoc;
+        private TextBox txtJobCompanyLoc;
+        private Label lblJobPosition;
+        private TextBox txtJobPosition;
+        private Label lblJobSource;
+        private TextBox txtJobSource;
+        private TextBox txtSkills;
+        private CheckBox chkClientOrg;
+        private CheckBox chkLetterToPdf;
+        private Label lblCoverLetterPath;
+        private TextBox txtCoverLetterPath;
+        private Button btnBrowseCoverLetter;
     }
 }

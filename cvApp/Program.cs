@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace cvApp
 {
     internal static class Program
@@ -11,7 +13,11 @@ namespace cvApp
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            var config = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+            Application.Run(new MainForm(config));
         }
     }
 }
