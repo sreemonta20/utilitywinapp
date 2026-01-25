@@ -1012,5 +1012,25 @@ namespace cvApp
             }
             MessageBox.Show("All fields have been cleared.", "Clear", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void txtPosition_TextChanged(object sender, EventArgs e)
+        {
+            txtJobPosition.Text = txtPosition.Text;
+        }
+
+        private void txtCompany_TextChanged(object sender, EventArgs e)
+        {
+            // Auto-fill the Cover Letter Company Location field
+            txtJobCompanyLoc.Text = txtCompany.Text;
+
+            // Dynamically update the AddressTo field as you type the company name
+            CoverLetter? oCoverLetter = _config.GetSection("CoverLetter").Get<CoverLetter>();
+            if (oCoverLetter != null)
+            {
+                string rawAddress = oCoverLetter.AddressTo ?? string.Empty;
+                txtAddressTo.Text = rawAddress.Replace("Organization Name", txtCompany.Text)
+                                             .Replace(".", Environment.NewLine);
+            }
+        }
     }
 }

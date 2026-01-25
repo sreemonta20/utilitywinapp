@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cvApp", "cvApp\cvApp.csproj", "{A59D327D-10FC-4B48-8ACA-28FE991E2FB2}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "cvApp.Installer", "cvApp.Installer\cvApp.Installer.vdproj", "{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "cvAppInstaller", "cvAppInstaller\cvAppInstaller.vdproj", "{16344D50-3507-FCDB-BEC7-0BEBF12966FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +23,10 @@ Global
 		{A59D327D-10FC-4B48-8ACA-28FE991E2FB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A59D327D-10FC-4B48-8ACA-28FE991E2FB2}.Release|x64.ActiveCfg = Release|x64
 		{A59D327D-10FC-4B48-8ACA-28FE991E2FB2}.Release|x64.Build.0 = Release|x64
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Debug|Any CPU.ActiveCfg = Debug
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Debug|x64.ActiveCfg = Debug
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Debug|x64.Build.0 = Debug
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Release|Any CPU.ActiveCfg = Release
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Release|x64.ActiveCfg = Release
-		{D5F06CE3-C377-E38C-5959-D0DE7C50BEF6}.Release|x64.Build.0 = Release
+		{16344D50-3507-FCDB-BEC7-0BEBF12966FF}.Debug|Any CPU.ActiveCfg = Debug
+		{16344D50-3507-FCDB-BEC7-0BEBF12966FF}.Debug|x64.ActiveCfg = Debug
+		{16344D50-3507-FCDB-BEC7-0BEBF12966FF}.Release|Any CPU.ActiveCfg = Release
+		{16344D50-3507-FCDB-BEC7-0BEBF12966FF}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
