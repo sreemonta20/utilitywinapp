@@ -1032,5 +1032,10 @@ namespace cvApp
                                              .Replace(".", Environment.NewLine);
             }
         }
+
+        private void btnJdPdfBrowse_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -31,6 +31,8 @@
             picLoader = new PictureBox();
             lblStatus = new Label();
             grpBoxCVResume = new GroupBox();
+            lblJDPdf = new Label();
+            txtJdPdf = new TextBox();
             chkIsQAGenerate = new CheckBox();
             lblRelevantQANum = new Label();
             txtRelevantQANum = new TextBox();
@@ -69,6 +71,11 @@
             lblLetterTo = new Label();
             dtpDate = new DateTimePicker();
             lblDate = new Label();
+            btnJdPdfBrowse = new Button();
+            lblMissingSkills = new Label();
+            txtMissingSkills = new TextBox();
+            chkMissingSkills = new CheckBox();
+            chkAIGenCoverLetter = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)picLoader).BeginInit();
             grpBoxCVResume.SuspendLayout();
             grpBoxCoverLetter.SuspendLayout();
@@ -76,7 +83,7 @@
             // 
             // picLoader
             // 
-            picLoader.Location = new Point(459, 472);
+            picLoader.Location = new Point(459, 580);
             picLoader.Name = "picLoader";
             picLoader.Size = new Size(140, 40);
             picLoader.SizeMode = PictureBoxSizeMode.Zoom;
@@ -88,7 +95,7 @@
             // 
             lblStatus.Font = new Font("Segoe UI", 9F);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(12, 524);
+            lblStatus.Location = new Point(12, 632);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(1089, 40);
             lblStatus.TabIndex = 16;
@@ -96,6 +103,12 @@
             // 
             // grpBoxCVResume
             // 
+            grpBoxCVResume.Controls.Add(chkMissingSkills);
+            grpBoxCVResume.Controls.Add(txtMissingSkills);
+            grpBoxCVResume.Controls.Add(lblMissingSkills);
+            grpBoxCVResume.Controls.Add(btnJdPdfBrowse);
+            grpBoxCVResume.Controls.Add(lblJDPdf);
+            grpBoxCVResume.Controls.Add(txtJdPdf);
             grpBoxCVResume.Controls.Add(chkIsQAGenerate);
             grpBoxCVResume.Controls.Add(lblRelevantQANum);
             grpBoxCVResume.Controls.Add(txtRelevantQANum);
@@ -114,15 +127,32 @@
             grpBoxCVResume.Controls.Add(chkAddSkillToCv);
             grpBoxCVResume.Location = new Point(12, 4);
             grpBoxCVResume.Name = "grpBoxCVResume";
-            grpBoxCVResume.Size = new Size(576, 462);
+            grpBoxCVResume.Size = new Size(576, 558);
             grpBoxCVResume.TabIndex = 22;
             grpBoxCVResume.TabStop = false;
             grpBoxCVResume.Text = "CV / Resume";
             // 
+            // lblJDPdf
+            // 
+            lblJDPdf.AutoSize = true;
+            lblJDPdf.Location = new Point(15, 260);
+            lblJDPdf.Name = "lblJDPdf";
+            lblJDPdf.Size = new Size(43, 15);
+            lblJDPdf.TabIndex = 47;
+            lblJDPdf.Text = "JD Pdf:";
+            // 
+            // txtJdPdf
+            // 
+            txtJdPdf.Location = new Point(175, 260);
+            txtJdPdf.Name = "txtJdPdf";
+            txtJdPdf.ReadOnly = true;
+            txtJdPdf.Size = new Size(281, 23);
+            txtJdPdf.TabIndex = 48;
+            // 
             // chkIsQAGenerate
             // 
             chkIsQAGenerate.AutoSize = true;
-            chkIsQAGenerate.Location = new Point(15, 329);
+            chkIsQAGenerate.Location = new Point(15, 461);
             chkIsQAGenerate.Name = "chkIsQAGenerate";
             chkIsQAGenerate.Size = new Size(93, 19);
             chkIsQAGenerate.TabIndex = 46;
@@ -133,7 +163,7 @@
             // lblRelevantQANum
             // 
             lblRelevantQANum.AutoSize = true;
-            lblRelevantQANum.Location = new Point(15, 357);
+            lblRelevantQANum.Location = new Point(15, 488);
             lblRelevantQANum.Name = "lblRelevantQANum";
             lblRelevantQANum.Size = new Size(139, 15);
             lblRelevantQANum.TabIndex = 40;
@@ -142,7 +172,7 @@
             // 
             // txtRelevantQANum
             // 
-            txtRelevantQANum.Location = new Point(175, 354);
+            txtRelevantQANum.Location = new Point(175, 485);
             txtRelevantQANum.Name = "txtRelevantQANum";
             txtRelevantQANum.Size = new Size(50, 23);
             txtRelevantQANum.TabIndex = 42;
@@ -168,7 +198,7 @@
             // lblPosition
             // 
             lblPosition.AutoSize = true;
-            lblPosition.Location = new Point(15, 62);
+            lblPosition.Location = new Point(15, 57);
             lblPosition.Name = "lblPosition";
             lblPosition.Size = new Size(53, 15);
             lblPosition.TabIndex = 22;
@@ -176,7 +206,7 @@
             // 
             // txtPosition
             // 
-            txtPosition.Location = new Point(175, 59);
+            txtPosition.Location = new Point(175, 54);
             txtPosition.Name = "txtPosition";
             txtPosition.Size = new Size(363, 23);
             txtPosition.TabIndex = 24;
@@ -185,7 +215,7 @@
             // lblJobDescription
             // 
             lblJobDescription.AutoSize = true;
-            lblJobDescription.Location = new Point(15, 102);
+            lblJobDescription.Location = new Point(15, 90);
             lblJobDescription.Name = "lblJobDescription";
             lblJobDescription.Size = new Size(91, 15);
             lblJobDescription.TabIndex = 26;
@@ -193,7 +223,7 @@
             // 
             // txtJobDescription
             // 
-            txtJobDescription.Location = new Point(175, 102);
+            txtJobDescription.Location = new Point(175, 90);
             txtJobDescription.Multiline = true;
             txtJobDescription.Name = "txtJobDescription";
             txtJobDescription.ScrollBars = ScrollBars.Vertical;
@@ -203,7 +233,7 @@
             // lblCVPath
             // 
             lblCVPath.AutoSize = true;
-            lblCVPath.Location = new Point(15, 242);
+            lblCVPath.Location = new Point(15, 223);
             lblCVPath.Name = "lblCVPath";
             lblCVPath.Size = new Size(120, 15);
             lblCVPath.TabIndex = 31;
@@ -211,7 +241,7 @@
             // 
             // txtCVPath
             // 
-            txtCVPath.Location = new Point(175, 242);
+            txtCVPath.Location = new Point(175, 223);
             txtCVPath.Name = "txtCVPath";
             txtCVPath.ReadOnly = true;
             txtCVPath.Size = new Size(281, 23);
@@ -219,7 +249,7 @@
             // 
             // btnBrowse
             // 
-            btnBrowse.Location = new Point(485, 238);
+            btnBrowse.Location = new Point(485, 219);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(80, 28);
             btnBrowse.TabIndex = 35;
@@ -230,7 +260,7 @@
             // chkConvertToPdf
             // 
             chkConvertToPdf.AutoSize = true;
-            chkConvertToPdf.Location = new Point(15, 282);
+            chkConvertToPdf.Location = new Point(15, 380);
             chkConvertToPdf.Name = "chkConvertToPdf";
             chkConvertToPdf.Size = new Size(106, 19);
             chkConvertToPdf.TabIndex = 37;
@@ -240,7 +270,7 @@
             // btnProcess
             // 
             btnProcess.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnProcess.Location = new Point(265, 418);
+            btnProcess.Location = new Point(265, 514);
             btnProcess.Name = "btnProcess";
             btnProcess.Size = new Size(140, 35);
             btnProcess.TabIndex = 44;
@@ -251,7 +281,7 @@
             // btnClear
             // 
             btnClear.Font = new Font("Segoe UI", 10F);
-            btnClear.Location = new Point(425, 418);
+            btnClear.Location = new Point(425, 514);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(140, 35);
             btnClear.TabIndex = 45;
@@ -264,7 +294,7 @@
             chkAddSkillToCv.AutoSize = true;
             chkAddSkillToCv.Checked = true;
             chkAddSkillToCv.CheckState = CheckState.Checked;
-            chkAddSkillToCv.Location = new Point(15, 307);
+            chkAddSkillToCv.Location = new Point(15, 407);
             chkAddSkillToCv.Name = "chkAddSkillToCv";
             chkAddSkillToCv.Size = new Size(175, 19);
             chkAddSkillToCv.TabIndex = 38;
@@ -273,6 +303,7 @@
             // 
             // grpBoxCoverLetter
             // 
+            grpBoxCoverLetter.Controls.Add(chkAIGenCoverLetter);
             grpBoxCoverLetter.Controls.Add(btnBrowseCoverLetter);
             grpBoxCoverLetter.Controls.Add(txtCoverLetterPath);
             grpBoxCoverLetter.Controls.Add(lblCoverLetterPath);
@@ -296,14 +327,14 @@
             grpBoxCoverLetter.Controls.Add(lblDate);
             grpBoxCoverLetter.Location = new Point(607, 4);
             grpBoxCoverLetter.Name = "grpBoxCoverLetter";
-            grpBoxCoverLetter.Size = new Size(494, 462);
+            grpBoxCoverLetter.Size = new Size(494, 558);
             grpBoxCoverLetter.TabIndex = 23;
             grpBoxCoverLetter.TabStop = false;
             grpBoxCoverLetter.Text = "Cover Letter";
             // 
             // btnBrowseCoverLetter
             // 
-            btnBrowseCoverLetter.Location = new Point(401, 379);
+            btnBrowseCoverLetter.Location = new Point(404, 47);
             btnBrowseCoverLetter.Name = "btnBrowseCoverLetter";
             btnBrowseCoverLetter.Size = new Size(80, 28);
             btnBrowseCoverLetter.TabIndex = 54;
@@ -313,7 +344,7 @@
             // 
             // txtCoverLetterPath
             // 
-            txtCoverLetterPath.Location = new Point(133, 381);
+            txtCoverLetterPath.Location = new Point(136, 49);
             txtCoverLetterPath.Name = "txtCoverLetterPath";
             txtCoverLetterPath.ReadOnly = true;
             txtCoverLetterPath.Size = new Size(252, 23);
@@ -322,7 +353,7 @@
             // lblCoverLetterPath
             // 
             lblCoverLetterPath.AutoSize = true;
-            lblCoverLetterPath.Location = new Point(17, 386);
+            lblCoverLetterPath.Location = new Point(17, 54);
             lblCoverLetterPath.Name = "lblCoverLetterPath";
             lblCoverLetterPath.Size = new Size(67, 15);
             lblCoverLetterPath.TabIndex = 52;
@@ -331,7 +362,7 @@
             // chkLetterToPdf
             // 
             chkLetterToPdf.AutoSize = true;
-            chkLetterToPdf.Location = new Point(279, 353);
+            chkLetterToPdf.Location = new Point(282, 420);
             chkLetterToPdf.Name = "chkLetterToPdf";
             chkLetterToPdf.Size = new Size(106, 19);
             chkLetterToPdf.TabIndex = 51;
@@ -341,7 +372,7 @@
             // chkClientOrg
             // 
             chkClientOrg.AutoSize = true;
-            chkClientOrg.Location = new Point(133, 353);
+            chkClientOrg.Location = new Point(136, 420);
             chkClientOrg.Name = "chkClientOrg";
             chkClientOrg.Size = new Size(102, 19);
             chkClientOrg.TabIndex = 50;
@@ -350,7 +381,7 @@
             // 
             // txtSkills
             // 
-            txtSkills.Location = new Point(133, 276);
+            txtSkills.Location = new Point(136, 343);
             txtSkills.Multiline = true;
             txtSkills.Name = "txtSkills";
             txtSkills.ScrollBars = ScrollBars.Vertical;
@@ -360,7 +391,7 @@
             // btnLetterClear
             // 
             btnLetterClear.Font = new Font("Segoe UI", 10F);
-            btnLetterClear.Location = new Point(424, 418);
+            btnLetterClear.Location = new Point(424, 513);
             btnLetterClear.Name = "btnLetterClear";
             btnLetterClear.Size = new Size(57, 35);
             btnLetterClear.TabIndex = 48;
@@ -371,7 +402,7 @@
             // btnProcCoverLetter
             // 
             btnProcCoverLetter.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnProcCoverLetter.Location = new Point(302, 418);
+            btnProcCoverLetter.Location = new Point(302, 513);
             btnProcCoverLetter.Name = "btnProcCoverLetter";
             btnProcCoverLetter.Size = new Size(116, 35);
             btnProcCoverLetter.TabIndex = 48;
@@ -382,7 +413,7 @@
             // lblSkills
             // 
             lblSkills.AutoSize = true;
-            lblSkills.Location = new Point(17, 276);
+            lblSkills.Location = new Point(17, 343);
             lblSkills.Name = "lblSkills";
             lblSkills.Size = new Size(36, 15);
             lblSkills.TabIndex = 39;
@@ -391,7 +422,7 @@
             // lblJobCompanyLoc
             // 
             lblJobCompanyLoc.AutoSize = true;
-            lblJobCompanyLoc.Location = new Point(17, 240);
+            lblJobCompanyLoc.Location = new Point(17, 307);
             lblJobCompanyLoc.Name = "lblJobCompanyLoc";
             lblJobCompanyLoc.Size = new Size(113, 15);
             lblJobCompanyLoc.TabIndex = 37;
@@ -399,7 +430,7 @@
             // 
             // txtJobCompanyLoc
             // 
-            txtJobCompanyLoc.Location = new Point(133, 237);
+            txtJobCompanyLoc.Location = new Point(136, 304);
             txtJobCompanyLoc.Name = "txtJobCompanyLoc";
             txtJobCompanyLoc.Size = new Size(348, 23);
             txtJobCompanyLoc.TabIndex = 36;
@@ -407,7 +438,7 @@
             // lblJobPosition
             // 
             lblJobPosition.AutoSize = true;
-            lblJobPosition.Location = new Point(17, 200);
+            lblJobPosition.Location = new Point(17, 267);
             lblJobPosition.Name = "lblJobPosition";
             lblJobPosition.Size = new Size(53, 15);
             lblJobPosition.TabIndex = 35;
@@ -415,7 +446,7 @@
             // 
             // txtJobPosition
             // 
-            txtJobPosition.Location = new Point(133, 197);
+            txtJobPosition.Location = new Point(136, 264);
             txtJobPosition.Name = "txtJobPosition";
             txtJobPosition.Size = new Size(348, 23);
             txtJobPosition.TabIndex = 34;
@@ -423,7 +454,7 @@
             // lblJobSource
             // 
             lblJobSource.AutoSize = true;
-            lblJobSource.Location = new Point(17, 161);
+            lblJobSource.Location = new Point(17, 228);
             lblJobSource.Name = "lblJobSource";
             lblJobSource.Size = new Size(67, 15);
             lblJobSource.TabIndex = 33;
@@ -431,7 +462,7 @@
             // 
             // txtJobSource
             // 
-            txtJobSource.Location = new Point(133, 158);
+            txtJobSource.Location = new Point(136, 225);
             txtJobSource.Name = "txtJobSource";
             txtJobSource.Size = new Size(348, 23);
             txtJobSource.TabIndex = 32;
@@ -439,7 +470,7 @@
             // lblSalutation
             // 
             lblSalutation.AutoSize = true;
-            lblSalutation.Location = new Point(17, 122);
+            lblSalutation.Location = new Point(17, 189);
             lblSalutation.Name = "lblSalutation";
             lblSalutation.Size = new Size(63, 15);
             lblSalutation.TabIndex = 31;
@@ -447,14 +478,14 @@
             // 
             // txtSalutation
             // 
-            txtSalutation.Location = new Point(133, 119);
+            txtSalutation.Location = new Point(136, 186);
             txtSalutation.Name = "txtSalutation";
             txtSalutation.Size = new Size(348, 23);
             txtSalutation.TabIndex = 30;
             // 
             // txtAddressTo
             // 
-            txtAddressTo.Location = new Point(133, 56);
+            txtAddressTo.Location = new Point(136, 123);
             txtAddressTo.Multiline = true;
             txtAddressTo.Name = "txtAddressTo";
             txtAddressTo.ScrollBars = ScrollBars.Vertical;
@@ -464,7 +495,7 @@
             // lblLetterTo
             // 
             lblLetterTo.AutoSize = true;
-            lblLetterTo.Location = new Point(17, 59);
+            lblLetterTo.Location = new Point(17, 126);
             lblLetterTo.Name = "lblLetterTo";
             lblLetterTo.Size = new Size(67, 15);
             lblLetterTo.TabIndex = 25;
@@ -472,7 +503,7 @@
             // 
             // dtpDate
             // 
-            dtpDate.Location = new Point(133, 19);
+            dtpDate.Location = new Point(136, 86);
             dtpDate.Name = "dtpDate";
             dtpDate.Size = new Size(200, 23);
             dtpDate.TabIndex = 24;
@@ -480,17 +511,65 @@
             // lblDate
             // 
             lblDate.AutoSize = true;
-            lblDate.Location = new Point(17, 22);
+            lblDate.Location = new Point(17, 89);
             lblDate.Name = "lblDate";
             lblDate.Size = new Size(34, 15);
             lblDate.TabIndex = 23;
             lblDate.Text = "Date:";
             // 
+            // btnJdPdfBrowse
+            // 
+            btnJdPdfBrowse.Location = new Point(485, 257);
+            btnJdPdfBrowse.Name = "btnJdPdfBrowse";
+            btnJdPdfBrowse.Size = new Size(80, 28);
+            btnJdPdfBrowse.TabIndex = 49;
+            btnJdPdfBrowse.Text = "Browse...";
+            btnJdPdfBrowse.UseVisualStyleBackColor = true;
+            btnJdPdfBrowse.Click += btnJdPdfBrowse_Click;
+            // 
+            // lblMissingSkills
+            // 
+            lblMissingSkills.AutoSize = true;
+            lblMissingSkills.Location = new Point(15, 313);
+            lblMissingSkills.Name = "lblMissingSkills";
+            lblMissingSkills.Size = new Size(80, 15);
+            lblMissingSkills.TabIndex = 50;
+            lblMissingSkills.Text = "Missing Skills:";
+            // 
+            // txtMissingSkills
+            // 
+            txtMissingSkills.Location = new Point(175, 298);
+            txtMissingSkills.Multiline = true;
+            txtMissingSkills.Name = "txtMissingSkills";
+            txtMissingSkills.ScrollBars = ScrollBars.Vertical;
+            txtMissingSkills.Size = new Size(390, 63);
+            txtMissingSkills.TabIndex = 51;
+            // 
+            // chkMissingSkills
+            // 
+            chkMissingSkills.AutoSize = true;
+            chkMissingSkills.Location = new Point(15, 434);
+            chkMissingSkills.Name = "chkMissingSkills";
+            chkMissingSkills.Size = new Size(96, 19);
+            chkMissingSkills.TabIndex = 52;
+            chkMissingSkills.Text = "Missing Skills";
+            chkMissingSkills.UseVisualStyleBackColor = true;
+            // 
+            // chkAIGenCoverLetter
+            // 
+            chkAIGenCoverLetter.AutoSize = true;
+            chkAIGenCoverLetter.Location = new Point(17, 23);
+            chkAIGenCoverLetter.Name = "chkAIGenCoverLetter";
+            chkAIGenCoverLetter.Size = new Size(189, 19);
+            chkAIGenCoverLetter.TabIndex = 55;
+            chkAIGenCoverLetter.Text = "Fully AI Generated Cover Letter";
+            chkAIGenCoverLetter.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1113, 567);
+            ClientSize = new Size(1113, 678);
             Controls.Add(grpBoxCoverLetter);
             Controls.Add(picLoader);
             Controls.Add(lblStatus);
@@ -550,5 +629,12 @@
         private Label lblCoverLetterPath;
         private TextBox txtCoverLetterPath;
         private Button btnBrowseCoverLetter;
+        private Label lblJDPdf;
+        private TextBox txtJdPdf;
+        private Button btnJdPdfBrowse;
+        private Label lblMissingSkills;
+        private TextBox txtMissingSkills;
+        private CheckBox chkMissingSkills;
+        private CheckBox chkAIGenCoverLetter;
     }
 }
