@@ -1211,7 +1211,10 @@ namespace cvApp
 
             // Default checkbox states: Missing Skills and Fully AI Generated Cover Letter are ON by default
             chkMissingSkills.Checked = true;
+
+            chkAIGenCoverLetter.CheckedChanged += chkAIGenCoverLetter_CheckedChanged;
             chkAIGenCoverLetter.Checked = true;
+            chkAIGenCoverLetter_CheckedChanged(chkAIGenCoverLetter, EventArgs.Empty); // apply the initial enabled/disabled state
 
             // Job Description input toggle: off by default (typed text active, JD PDF controls disabled)
             chkJobDescPdf.CheckedChanged += chkJobDescPdf_CheckedChanged;
@@ -2387,6 +2390,31 @@ namespace cvApp
             // Address To is now fixed to "Hiring Manager" by default and Company/Location is left for the
             // user to fill in manually (e.g. with just a city/country) - so typing a company name here no
             // longer auto-populates either of those cover letter fields.
+        }
+
+        private void chkAIGenCoverLetter_CheckedChanged(object sender, EventArgs e)
+        {
+            bool useAIcoverletter = chkAIGenCoverLetter.Checked;
+            txtJobSource.Enabled = !useAIcoverletter;
+            txtJobCompanyLoc.Enabled = !useAIcoverletter;
+            txtSkills.Enabled = !useAIcoverletter;
+            chkClientOrg.Enabled = !useAIcoverletter;
+            chkLetterToPdf.Enabled = !useAIcoverletter;
+            //if(useAIcoverletter) {
+            //    txtJobSource.Enabled = !useAIcoverletter;
+            //    txtJobCompanyLoc.Enabled = !useAIcoverletter;
+            //    txtSkills.Enabled = !useAIcoverletter;
+            //    chkClientOrg.Enabled = !useAIcoverletter;
+            //    chkLetterToPdf.Enabled = !useAIcoverletter;
+            //}
+            //else
+            //{
+            //    txtJobSource.Enabled = !useAIcoverletter;
+            //    txtJobCompanyLoc.Enabled = !useAIcoverletter;
+            //    txtSkills.Enabled = !useAIcoverletter;
+            //    chkClientOrg.Enabled = !useAIcoverletter;
+            //    chkLetterToPdf.Enabled = !useAIcoverletter;
+            //}
         }
     }
 }

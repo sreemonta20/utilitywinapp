@@ -392,6 +392,7 @@
             chkAIGenCoverLetter.TabIndex = 55;
             chkAIGenCoverLetter.Text = "Fully AI Generated Cover Letter";
             chkAIGenCoverLetter.UseVisualStyleBackColor = true;
+            chkAIGenCoverLetter.CheckedChanged += chkAIGenCoverLetter_CheckedChanged;
             // 
             // btnBrowseCoverLetter
             // 
